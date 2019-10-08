@@ -1,0 +1,39 @@
+{
+	"com.badlogic.gdx.graphics.Color": {
+		"white": {"r": 1, "g": 1, "b": 1, "a": 1},
+		"black": {"r": 0, "g": 0, "b": 0, "a": 1},
+		"grey": {"r": 0, "g": 0, "b": 0, "a": 0.4},
+		"red":   {"r": 255, "g": 0, "b": 0, "a": 1},
+		"green": {"r": 0, "g": 1, "b": 0, "a": 1},
+		"blue":  {"r": 0, "g": 0, "b": 1, "a": 1}
+	},
+	
+	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+		"font": {"file": "font.fnt"}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+		"default": {"font": font, fontColor: black },
+		"red":     {"font": font, fontColor: red },
+		"grey":     {"font": font, fontColor: grey },
+		"green":     {"font": font, fontColor: blue }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"default": {"up": "grey_normal", "down": "grey_pressed", "disabled": "grey_pressed", "font": font, "pressedOffsetX": 1, "pressedOffsetY": -1, fontColor: black },
+		"red": {"up": "red_normal", "down": "red_pressed", "disabled": "red_pressed", "font": font, "pressedOffsetX": 1, "pressedOffsetY": -1, fontColor: red },
+		"green": {"up": "green_normal", "down": "green_pressed", "font": font, "pressedOffsetX": 1, "pressedOffsetY": -1, fontColor: black },
+		"grey": {"up": "grey_normal", "down": "grey_pressed", "disabled": "grey_pressed", "font": font, "pressedOffsetX": 1, "pressedOffsetY": -1, fontColor: grey }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+		"default": {"up": "grey_normal", "down": "grey_pressed", "pressedOffsetX": 1, "pressedOffsetY": -1 },
+		"green": {"up": "green_normal", "down": "green_pressed", "pressedOffsetX": 1, "pressedOffsetY": -1 },
+		"red": {"up": "red_normal", "down": "red_pressed", "pressedOffsetX": 1, "pressedOffsetY": -1 }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+		"dialog": {titleFont: font, titleFontColor: white, stageBackground: green_normal}
+	}
+	
+}

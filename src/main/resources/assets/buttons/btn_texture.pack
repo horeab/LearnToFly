@@ -1,0 +1,69 @@
+
+btn_texture.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+green_normal
+  rotate: false
+  xy: 1, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+green_pressed
+  rotate: false
+  xy: 25, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+red_normal
+  rotate: false
+  xy: 49, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+red_pressed
+  rotate: false
+  xy: 73, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+grey_normal
+  rotate: false
+  xy: 97, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+grey_pressed
+  rotate: false
+  xy: 121, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+grey_left_border
+  rotate: false
+  xy: 145, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+grey_right_border
+  rotate: false
+  xy: 169, 1
+  size: 22, 22
+  split: 4, 4, 4, 4
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
