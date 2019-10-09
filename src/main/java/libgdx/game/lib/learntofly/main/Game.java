@@ -3,12 +3,13 @@ package libgdx.game.lib.learntofly.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import libgdx.constants.Language;
 import libgdx.game.lib.learntofly.handlers.BBInput;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.util.FacebookLinkHandler;
 import libgdx.game.lib.learntofly.util.GameMode;
-import libgdx.game.lib.learntofly.util.Language;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.resources.FontManager;
 
 public class Game extends com.badlogic.gdx.Game {
 
@@ -23,19 +24,18 @@ public class Game extends com.badlogic.gdx.Game {
 	private OrthographicCamera cam;
 	private OrthographicCamera hudCam;
 
+	private FontManager fontManager;
 	private GameStateManager gameStateManager;
 
 	private float accumulator;
 
-	private FacebookLinkHandler facebookLinkHandler;
 	private Language language;
 	private static GameMode gameMode;
 
-	public Game(FacebookLinkHandler facebookLinkHandler, Language language, GameMode gameMode) {
+	public Game(Language language, GameMode gameMode) {
 		super();
 		displayHeight = null;
 		displayWidth = null;
-		this.facebookLinkHandler = facebookLinkHandler;
 		this.language = language;
 		Game.gameMode = gameMode;
 	}
@@ -157,10 +157,6 @@ public class Game extends com.badlogic.gdx.Game {
 	private void updating(float delta) {
 		gameStateManager.update(delta);
 		gameStateManager.render();
-	}
-
-	public FacebookLinkHandler getFacebookLinkHandler() {
-		return facebookLinkHandler;
 	}
 
 	public Language getLanguage() {

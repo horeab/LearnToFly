@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdx.constants.Language;
 import libgdx.game.lib.learntofly.levels.GliderLevel;
 import libgdx.game.lib.learntofly.levels.RocketLevel;
 import libgdx.game.lib.learntofly.levels.SledLevel;
@@ -15,7 +16,6 @@ import libgdx.game.lib.learntofly.levels.SledLevel;
 public enum Resource {
 
     // @formatter:off
-    font("resources/font.fnt", BitmapFont.class),
 
     //STAGE1///////////////////////////////////////////////////////////////////
     stage1_sky_bgs0("game/stages/stage1/sky_bgs0.png", Texture.class),
@@ -99,9 +99,9 @@ public enum Resource {
     ///////////////////////////////////////////////////////////////////////////
 
     //MENU/////////////////////////////////////////////////////////////////////
-    title_EN("menu/title_EN.png", Texture.class),
-    title_DE("menu/title_DE.png", Texture.class),
-    title_RO("menu/title_RO.png", Texture.class),
+    title_en("menu/title_en.png", Texture.class),
+    title_de("menu/title_de.png", Texture.class),
+    title_ro("menu/title_ro.png", Texture.class),
     background_all("menu/background_all.jpg", Texture.class),
     background_second("menu/background_second.png", Texture.class),
     facebook_like("menu/facebook_like.png", Texture.class),

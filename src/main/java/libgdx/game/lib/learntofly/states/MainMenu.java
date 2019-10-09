@@ -70,10 +70,6 @@ public class MainMenu extends GameState {
 				.height(valueForScaledHeight(30))
 				.padTop(-valueForScaledHeight(5))
 				.row();
-		buttonsTable.add(likeBtnTable)
-				.height(valueForScaledHeight(15))
-				.padLeft(Utils.getValueForPercent(displayWidth, 70))
-				.padTop(likeButtonTopPad * 2);
 
 		controlsTable.add(soundTable)
 				.height(valueForScaledHeight(5))
@@ -89,9 +85,6 @@ public class MainMenu extends GameState {
 				.width(displayWidth);
 
 		continueTable.add(createContinueBtn()).width(getBtnWidth()).height(getBtnHeight());
-		likeBtnTable.add(createLikeBtn()).width(getExtraBtnWidth() * libgdxControlUtils.getWidthDisplayRatio()).height(getExtraBtnHeight() * libgdxControlUtils.getWidthDisplayRatio());
-		likeBtnTable.row();
-		likeBtnTable.add(createStoreBtn()).width(getExtraBtnWidth() * libgdxControlUtils.getWidthDisplayRatio()).height(getExtraBtnHeight() * libgdxControlUtils.getWidthDisplayRatio());
 		if (gameInfo.gameExistsInMemory()) {
 			newGameTable.add(createNewGameBtn()).width(getBtnWidth()).height(getBtnHeight());
 		}
@@ -140,32 +133,6 @@ public class MainMenu extends GameState {
 			}
 		});
 		return musicBtn;
-	}
-
-	private Table createLikeBtn() {
-		Table likeBtn = c.table(Resource.facebook_like);
-		likeBtn.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (Game.isDesktopGameMode()) {
-					Gdx.net.openURI("https://www.facebook.com/learntoflyapp/");
-				} else {
-					game.getFacebookLinkHandler().openFacebookPage("fb://profile/201043230226701", "https://www.facebook.com/learntoflyapp/");
-				}
-			}
-		});
-		return likeBtn;
-	}
-
-	private Table createStoreBtn() {
-		Table storeBtn = c.table(Resource.google_play);
-		storeBtn.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.simapps.pengadv");
-			}
-		});
-		return storeBtn;
 	}
 
 	private TextButton createNewGameBtn() {

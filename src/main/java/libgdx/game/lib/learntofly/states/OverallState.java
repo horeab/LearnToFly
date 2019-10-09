@@ -1,12 +1,13 @@
 package libgdx.game.lib.learntofly.states;
 
+import libgdx.constants.Language;
 import libgdx.game.lib.learntofly.storemanagers.AchievementsManager;
 import libgdx.game.lib.learntofly.storemanagers.GameInfoManager;
 import libgdx.game.lib.learntofly.storemanagers.PreferencesManager;
-import libgdx.game.lib.learntofly.util.Language;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.resources.FontManager;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -49,6 +50,7 @@ public class OverallState {
 			assetManager.load(resource.getPath(), resource.getClassType());
 		}
 		assetManager.finishLoading();
+		FontManager fontManager = new FontManager();
 		skin.add("coin", Utils.getTextureWithFilter(assetManager, Resource.coin));
 		skin.add("background_second", Utils.getTextureWithFilter(assetManager, Resource.background_second));
 	}
