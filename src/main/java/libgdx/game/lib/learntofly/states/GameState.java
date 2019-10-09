@@ -94,7 +94,8 @@ public abstract class GameState {
 	public void render() {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act();
+		stage.getViewport().apply();
+		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
 	}

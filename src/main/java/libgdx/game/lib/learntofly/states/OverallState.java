@@ -33,9 +33,9 @@ public class OverallState {
 	}
 
 	private void setupStuff(Language language) {
-		labelsResource = I18NBundle.createBundle(Gdx.files.internal("resources/labels_" + language.toString()));
+		labelsResource = I18NBundle.createBundle(Gdx.files.internal("learntofly/resources/labels_" + language.toString()));
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		skin = new Skin(Gdx.files.internal("resources/skin.json"), new TextureAtlas(Gdx.files.internal("buttons/btn_texture.pack")));
+		skin = new Skin(Gdx.files.internal("learntofly/resources/skin.json"), new TextureAtlas(Gdx.files.internal("learntofly/buttons/btn_texture.pack")));
 		gameInfoManager = new GameInfoManager();
 		preferencesManager = new PreferencesManager();
 		achievementsManager = new AchievementsManager();

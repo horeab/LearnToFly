@@ -35,13 +35,13 @@ public class GameStateManager {
 //		 pushState(new AchievementsScreen(this, new GameInfo(3, 1, 23, 12, 12, 6, 6, 6)));
 //		 pushState(new Play(this, new GameInfo(3, 1, 23,   9, 9, 5, 5, 5))); 
 //		 pushState(new Play(this, new GameInfo(1, 1, 1, 1, 12, 6, 1, 1)));
-		 pushState(new Play(this, new GameInfo(1, 1, 1, 12, 0, 0, 0, 0)));
+//		 pushState(new Play(this, new GameInfo(1, 1, 1, 12, 0, 0, 0, 0)));
 //		 pushState(new UpgradeMenu(this, new GameInfo(3, 4, 10000, 7, 2, 2, 6, 2)));
 //		 pushState(new ScrollShopMenu(this, GliderLevel.SHOP_ID, new GameInfo(3, 1, 21113, 3, 2, 1, 0, 0)));
 //		 pushState(new TutorialScreen(this, new GameInfo(3, 1, 23, 3, 2, 0, 5, 2), TutorialScreenType.ROCKET)); 
 //		 pushState(new StageScreen(this, new GameInfo(0, 1, 0, 0, 0, 0, 0, 0), StageScreenType.START_GAME));
 //		 pushState(new GameFinishedScreen(this, new GameInfo(3, 1, 23, 12,12, 6, 6, 6)));
-//		 pushState(new MainMenu(this, null));
+		 pushState(new MainMenu(this, null));
 		// @formatter:on 
 	}
 
