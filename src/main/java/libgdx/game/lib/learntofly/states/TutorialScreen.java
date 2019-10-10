@@ -34,7 +34,7 @@ public class TutorialScreen extends GameState {
 	private Table createLayout() {
 		Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage(), false);
 		Table imageTable = new Table(skin);
-		imageTable.setBackground(Utils.getDrawable(assetManager, getResource()));
+		imageTable.setBackground(Utils.getDrawable( getResource()));
 		imageTable.setTouchable(Touchable.enabled);
 		imageTable.addListener(new ClickListener() {
 			@Override

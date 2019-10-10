@@ -47,11 +47,11 @@ public class RampCreator {
     private TextureRegion backgrL3;
     private TextureRegion backgrL2;
 
-    public RampCreator(World world, int currentStage, int rampBaseHeightLevel, float downwardsRampLevel, float upwardsRampLevel, AssetManager manager) {
+    public RampCreator(World world, int currentStage, int rampBaseHeightLevel, float downwardsRampLevel, float upwardsRampLevel) {
         worldBodyCreator = new WorldBodyCreator(world);
-        backgrL1 = new TextureRegion(Utils.getTextureWithFilter(manager, Resource.getGameStageRampBackgroundResource(currentStage, 1)));
-        backgrL2 = new TextureRegion(Utils.getTextureWithFilter(manager, Resource.getGameStageRampBackgroundResource(currentStage, 2)));
-        backgrL3 = new TextureRegion(Utils.getTextureWithFilter(manager, Resource.getGameStageRampBackgroundResource(currentStage, 3)));
+        backgrL1 = new TextureRegion(Utils.getTextureWithFilter(Resource.getGameStageRampBackgroundResource(currentStage, 1)));
+        backgrL2 = new TextureRegion(Utils.getTextureWithFilter(Resource.getGameStageRampBackgroundResource(currentStage, 2)));
+        backgrL3 = new TextureRegion(Utils.getTextureWithFilter(Resource.getGameStageRampBackgroundResource(currentStage, 3)));
         this.downwardsRampLevel = downwardsRampLevel;
         this.upwardsRampLevel = upwardsRampLevel;
         this.rampBaseHeightLevel = rampBaseHeightLevel;

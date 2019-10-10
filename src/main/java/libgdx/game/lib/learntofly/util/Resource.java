@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,13 @@ import libgdx.constants.Language;
 import libgdx.game.lib.learntofly.levels.GliderLevel;
 import libgdx.game.lib.learntofly.levels.RocketLevel;
 import libgdx.game.lib.learntofly.levels.SledLevel;
+import libgdx.resources.Res;
 
-public enum Resource {
+public enum Resource implements Res {
 
     // @formatter:off
 
+    specific_labels("labels/labels", I18NBundle.class),
     //STAGE1///////////////////////////////////////////////////////////////////
     stage1_sky_bgs0("game/stages/stage1/sky_bgs0.png", Texture.class),
     stage1_sky_bgs1("game/stages/stage1/sky_bgs1.png", Texture.class),

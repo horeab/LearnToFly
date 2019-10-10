@@ -122,10 +122,10 @@ public class ScrollShopMenu extends GameState {
 			btn.setTouchable(Touchable.disabled);
 			if (shopLevel.getLevel() <= getBoughtLevel()
 					&& shopLevel.getLevel() != gameInfo.getLevelForShopId(currentShopLevel.getShopId())) {
-				btnTable.setBackground(Utils.getDrawable(assetManager, Resource.checked_disabled));
+				btnTable.setBackground(Utils.getDrawable( Resource.checked_disabled));
 				btn.setTouchable(Touchable.enabled);
 			} else if (shopLevel.getLevel() == gameInfo.getLevelForShopId(currentShopLevel.getShopId())) {
-				SpriteDrawable drawable = Utils.getDrawable(assetManager, Resource.checked);
+				SpriteDrawable drawable = Utils.getDrawable( Resource.checked);
 				btnTable.setBackground(drawable);
 			}
 			else {
@@ -183,7 +183,7 @@ public class ScrollShopMenu extends GameState {
 			gameInfoManager.incrementShopLevel(gameInfo, currentShopLevel.getShopId());
 			currentShopLevel = currentShopLevel.getItem(currentShopLevel.getLevel() + 1);
 			gameInfoManager.updateCash(gameInfo, gameInfo.getCash() - currentShopLevel.getPrice());
-			libgdxControlUtils.playSound(Utils.getSound(assetManager, Resource.sound_bought));
+			libgdxControlUtils.playSound(Utils.getSound( Resource.sound_bought));
 		}
 		LibgdxControlUtils.refreshHeaderInfo(headerInfo, gameInfo.getCurrentDay(), gameInfo.getCash());
 	}
@@ -267,7 +267,7 @@ public class ScrollShopMenu extends GameState {
 		float imgContainerHeight = getShopHeight() - getImgContainerLabelTableHeight();
 
 		setShopImg(shopLevel, imgContainerImgImgTable);
-		Sprite sprite = Utils.getDrawable(assetManager, Resource.getMenuShopResourceForScrollShop(shopLevel.getShopId(), shopLevel.getLevel())).getSprite();
+		Sprite sprite = Utils.getDrawable( Resource.getMenuShopResourceForScrollShop(shopLevel.getShopId(), shopLevel.getLevel())).getSprite();
 		imgContainerImgTable.add(imgContainerImgImgTable)
 				.width(Utils.getValueForPercent(sprite.getWidth(), 45))
 				.height(Utils.getValueForPercent(sprite.getHeight(), 45))
@@ -307,7 +307,7 @@ public class ScrollShopMenu extends GameState {
 	}
 
 	private void setShopImg(ShopLevel shopLevel, Table imgContainerImgImgTable) {
-		Drawable drawable = Utils.getDrawable(assetManager, Resource.getMenuShopResourceForScrollShop(shopLevel.getShopId(), shopLevel.getLevel()));
+		Drawable drawable = Utils.getDrawable( Resource.getMenuShopResourceForScrollShop(shopLevel.getShopId(), shopLevel.getLevel()));
 		imgContainerImgImgTable.setBackground(drawable);
 	}
 

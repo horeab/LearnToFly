@@ -23,7 +23,7 @@ public class PlayerCreator {
 		worldBodyCreator = new WorldBodyCreator(world);
 	}
 
-	public Player createPlayer(int rampHeight, MyContactListener contactListener, AssetManager manager) {
+	public Player createPlayer(int rampHeight, MyContactListener contactListener) {
 		CircleShape playerShape = new CircleShape();
 		playerShape.setRadius(scaleDownPPM(PLAYER_RADIUS));
 		Body playerBody = worldBodyCreator.createBody(BodyType.DynamicBody, B2DVars.PLAYER_RADIUS, rampHeight);
@@ -37,7 +37,7 @@ public class PlayerCreator {
 		md.mass = MASS_KG;
 		md.center.set(new Vector2(0, 0));
 		playerBody.setMassData(md);
-		Player player = new Player(playerBody, contactListener, manager);
+		Player player = new Player(playerBody, contactListener);
 		player.setPreviousPlayerPoint();
 		return player;
 	}

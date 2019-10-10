@@ -40,16 +40,16 @@ public class CreateAchievmentPopup {
 	private Integer stageJustUnlocked;
 	private LibgdxControlUtils libgdxControlUtils;
 
-	public CreateAchievmentPopup(TextureRegion[] font, AssetManager assetManager, LibgdxControlUtils libgdxControlUtils) {
+	public CreateAchievmentPopup(TextureRegion[] font,  LibgdxControlUtils libgdxControlUtils) {
 		this.displayWidth = Game.getWidth();
 		this.displayHeight = Game.getHeight();
 		this.libgdxControlUtils = libgdxControlUtils;
 		this.font = font;
-		coinTexture = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.coin));
-		speedAchTexture = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.speed_achievement));
-		distanceAchTexture = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.distance_achievement));
-		durationAchTexture = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.duration_achievement));
-		altitudeAchTexture = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.altitude_achievement));
+		coinTexture = new TextureRegion(Utils.getTextureWithFilter( Resource.coin));
+		speedAchTexture = new TextureRegion(Utils.getTextureWithFilter( Resource.speed_achievement));
+		distanceAchTexture = new TextureRegion(Utils.getTextureWithFilter( Resource.distance_achievement));
+		durationAchTexture = new TextureRegion(Utils.getTextureWithFilter( Resource.duration_achievement));
+		altitudeAchTexture = new TextureRegion(Utils.getTextureWithFilter( Resource.altitude_achievement));
 	}
 
 	public void drawAchievmentPopup(SpriteBatch sb, Achievement achievement, Integer stageJustUnlocked, int displayAltitude) {

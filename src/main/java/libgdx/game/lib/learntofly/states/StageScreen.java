@@ -67,7 +67,7 @@ public class StageScreen extends GameState {
 
 	private void addFinishTable(Table allTable) {
 		Table finishTable = new Table(skin);
-		Image finishImage = new Image(Utils.getDrawable(assetManager, Resource.finish));
+		Image finishImage = new Image(Utils.getDrawable( Resource.finish));
 		int finishTablePadTop = 20;
 		finishTable
 				.add(finishImage)
@@ -100,7 +100,7 @@ public class StageScreen extends GameState {
 	private ImageButton createStageBtn(final int stageNr) {
 		ImageButton button = new ImageButton(skin);
 		Table backgroundTable = new Table(skin);
-		backgroundTable.setBackground(Utils.getDrawable(assetManager, Resource.getMenuStageResource(stageNr)));
+		backgroundTable.setBackground(Utils.getDrawable( Resource.getMenuStageResource(stageNr)));
 		Table stageImgTable = new Table(skin);
 		button.addListener(new ClickListener() {
 			@Override
@@ -111,7 +111,7 @@ public class StageScreen extends GameState {
 		backgroundTable.add(stageImgTable).width(getBtnSide()).height(getBtnHeight());
 		button.add(backgroundTable).fill();
 		if (!achievementsManager.isStageNrUnlocked(stageNr)) {
-			Image lockImage = new Image(Utils.getDrawable(assetManager,
+			Image lockImage = new Image(Utils.getDrawable(
 					Resource.lock));
 			lockImage.scaleBy(-0.5f);
 			stageImgTable.add(lockImage)
@@ -136,7 +136,7 @@ public class StageScreen extends GameState {
 			labelBackgroundTable.add(label);
 			stageImgTable.add(labelBackgroundTable).padTop(displayHeight / 10).width(getBtnSide()).row();
 			if (gameInfo.getSelectedStage() == stageNr) {
-				stageImgTable.setBackground(Utils.getDrawable(assetManager, Resource.stage_play));
+				stageImgTable.setBackground(Utils.getDrawable( Resource.stage_play));
 				stageImgTable.add().height(Utils.getValueForDisplayHeightPercent(43));
 			}
 		}
@@ -146,16 +146,16 @@ public class StageScreen extends GameState {
 	private Table createLabelTable(int distanceAch, int altitudeAch, int durationAch, int speedAch) {
 		Table achTable = new Table(skin);
 		if (distanceAch > 0) {
-			addToAchTable(distanceAch, Utils.getDrawable(assetManager, Resource.distance_achievement), achTable);
+			addToAchTable(distanceAch, Utils.getDrawable( Resource.distance_achievement), achTable);
 		}
 		if (altitudeAch > 0) {
-			addToAchTable(altitudeAch, Utils.getDrawable(assetManager, Resource.altitude_achievement), achTable);
+			addToAchTable(altitudeAch, Utils.getDrawable( Resource.altitude_achievement), achTable);
 		}
 		if (durationAch > 0) {
-			addToAchTable(durationAch, Utils.getDrawable(assetManager, Resource.duration_achievement), achTable);
+			addToAchTable(durationAch, Utils.getDrawable( Resource.duration_achievement), achTable);
 		}
 		if (speedAch > 0) {
-			addToAchTable(speedAch, Utils.getDrawable(assetManager, Resource.speed_achievement), achTable);
+			addToAchTable(speedAch, Utils.getDrawable( Resource.speed_achievement), achTable);
 		}
 		return achTable;
 	}

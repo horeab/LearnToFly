@@ -14,14 +14,14 @@ import libgdx.game.lib.learntofly.util.Utils;
 
 public class SledCreator extends BodyAccesoryCreator {
 
-	public SledCreator(World world, Body playerBody, Integer accesoryLevel, AssetManager assetManager) {
+	public SledCreator(World world, Body playerBody, Integer accesoryLevel) {
 		super(world, playerBody, accesoryLevel, "sled");
 		if (hasAccesory()) {
 			Resource inGameShopResource = Resource.getInGameShopResource(SledLevel.SHOP_ID, accesoryLevel);
-			Texture textureWithFilter = Utils.getTextureWithFilter(assetManager, inGameShopResource);
+			Texture textureWithFilter = Utils.getTextureWithFilter( inGameShopResource);
 			int width = textureWithFilter.getWidth();
 			int height = textureWithFilter.getHeight();
-			TextureAnimation sled = new TextureAnimation(inGameShopResource, "sled", Arrays.asList(0), width, height, assetManager);
+			TextureAnimation sled = new TextureAnimation(inGameShopResource, "sled", Arrays.asList(0), width, height);
 			animations.put("sled", sled);
 			setAnimationToPlay("sled");
 		}

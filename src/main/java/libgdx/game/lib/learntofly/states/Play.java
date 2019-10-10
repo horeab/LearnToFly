@@ -134,7 +134,7 @@ public class Play extends GameState {
 
         playerCreator = new PlayerCreator(world);
         camPositionCalculator = new CamPositionCalculator();
-        backgroundLoader = new BackgroundLoader(gameInfo.getSelectedStage(), assetManager);
+        backgroundLoader = new BackgroundLoader(gameInfo.getSelectedStage());
         backgrounds = backgroundLoader.loadBackgroundForAltitudeLevel(0, cam);
         sledLevelEnum = (SledLevel) SledLevel.NO_LEVEL.getItem(gameInfo.getSledLevel());
         rocketLevelEnum = (RocketLevel) RocketLevel.NO_LEVEL.getItem(gameInfo.getRocketLevel());
@@ -144,25 +144,25 @@ public class Play extends GameState {
     }
 
     private void initSound() {
-        rocketSound = Utils.getSound(assetManager, Resource.sound_rocket);
-        achievementSound = Utils.getSound(assetManager, Resource.sound_achiev);
-        stageUnlockedSound = Utils.getSound(assetManager, Resource.sound_stage_unlocked);
+        rocketSound = Utils.getSound( Resource.sound_rocket);
+        achievementSound = Utils.getSound( Resource.sound_achiev);
+        stageUnlockedSound = Utils.getSound( Resource.sound_stage_unlocked);
     }
 
     private void createWorldBodies() {
         RampLevel rampLevel = RampLevel.getRamp(gameInfo.getRampLevel());
-        rampCreator = new RampCreator(world, gameInfo.getSelectedStage(), rampLevel.getBaseHeight(), rampLevel.getDownwardsRampLevel(), rampLevel.getUpwardsRampLevel(), assetManager);
+        rampCreator = new RampCreator(world, gameInfo.getSelectedStage(), rampLevel.getBaseHeight(), rampLevel.getDownwardsRampLevel(), rampLevel.getUpwardsRampLevel());
         rampCreator.createRamps(10);
-        player = playerCreator.createPlayer((int) rampCreator.getDownwardsRampHeight(), contactListener, assetManager);
+        player = playerCreator.createPlayer((int) rampCreator.getDownwardsRampHeight(), contactListener);
         createAccesories();
-        hud = new HUD(player, playerAttrs, assetManager, libgdxControlUtils);
+        hud = new HUD(player, playerAttrs,  libgdxControlUtils);
     }
 
     private void createAccesories() {
-        sledCreator = new SledCreator(world, player.getBody(), gameInfo.getSledLevel(), assetManager);
-        playerOnRampProcessor = new PlayerOnRampProcessor(sledCreator.getAccesoryBody(), sledLevelEnum.getSpeedLevel(), sledLevelEnum.getTakeOffLevel(), player, assetManager);
-        gliderCreator = new GliderCreator(world, player.getBody(), gameInfo.getGliderLevel(), assetManager);
-        rocketCreator = new RocketCreator(world, player.getBody(), gameInfo.getRocketLevel(), assetManager);
+        sledCreator = new SledCreator(world, player.getBody(), gameInfo.getSledLevel());
+        playerOnRampProcessor = new PlayerOnRampProcessor(sledCreator.getAccesoryBody(), sledLevelEnum.getSpeedLevel(), sledLevelEnum.getTakeOffLevel(), player);
+        gliderCreator = new GliderCreator(world, player.getBody(), gameInfo.getGliderLevel());
+        rocketCreator = new RocketCreator(world, player.getBody(), gameInfo.getRocketLevel());
     }
 
     @Override

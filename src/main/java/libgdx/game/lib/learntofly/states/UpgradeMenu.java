@@ -92,7 +92,7 @@ public class UpgradeMenu extends GameState {
 		});
 		ImageButton achievementButton = new ImageButton(skin, "green");
 		Table achievementButtonTable = new Table(skin);
-		SpriteDrawable drawable = Utils.getDrawable(assetManager, Resource.achievement);
+		SpriteDrawable drawable = Utils.getDrawable( Resource.achievement);
 		achievementButtonTable.setBackground(drawable);
 		achievementButton.addListener(new ClickListener() {
 			@Override
@@ -169,7 +169,7 @@ public class UpgradeMenu extends GameState {
 				.height(labelHeight)
 				.width(getShopWidth());
 		imgContainer.row();
-		Sprite sprite = Utils.getDrawable(assetManager, getResourceForShop(finalShopLevel)).getSprite();
+		Sprite sprite = Utils.getDrawable( getResourceForShop(finalShopLevel)).getSprite();
 		float scalePercent = 45;
 		imgContainer.add(imgContainerImgTable).width(Utils.getValueForPercent(sprite.getWidth(), scalePercent)).height(Utils.getValueForPercent(sprite.getHeight(), scalePercent));
 
@@ -196,7 +196,7 @@ public class UpgradeMenu extends GameState {
 	}
 
 	private void setShopImg(ShopLevel shopLevel, Table imgContainerImgTable) {
-		imgContainerImgTable.setBackground(Utils.getDrawable(assetManager, getResourceForShop(shopLevel)));
+		imgContainerImgTable.setBackground(Utils.getDrawable( getResourceForShop(shopLevel)));
 	}
 
 	private Resource getResourceForShop(ShopLevel shopLevel) {
@@ -301,7 +301,7 @@ public class UpgradeMenu extends GameState {
 			public void clicked(InputEvent event, float x, float y) {
 				if (gameInfo.getLevelForShopId(shopId) < getTotalNrOfLevels(shopId)) {
 					gameInfoManager.updateCash(gameInfo, gameInfo.getCash() - getNextLevelPrice(shopId));
-					libgdxControlUtils.playSound(Utils.getSound(assetManager, Resource.sound_bought));
+					libgdxControlUtils.playSound(Utils.getSound( Resource.sound_bought));
 					gameInfoManager.incrementShopLevel(gameInfo, shopId);
 				}
 				refreshIncrementShop(rampLevelInfo, RampLevel.SHOP_ID);

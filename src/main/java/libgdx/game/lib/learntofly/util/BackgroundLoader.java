@@ -25,13 +25,13 @@ public class BackgroundLoader {
 
 	private float displayWidth;
 
-	public BackgroundLoader(int currentStage, AssetManager assetManager) {
-		this.surface = new TextureRegion(Utils.getTextureWithFilter(assetManager, Resource.getGameStageGroundBackgroundResource(currentStage)));
-		this.bgs0 = Utils.getTexture(assetManager, Resource.getGameStageBackgroundResource(currentStage, 0));
-		this.bgs1 = Utils.getTexture(assetManager, Resource.getGameStageBackgroundResource(currentStage, 1));
-		this.bgs2 = Utils.getTexture(assetManager, Resource.getGameStageBackgroundResource(currentStage, 2));
-		this.bgs3 = Utils.getTexture(assetManager, Resource.getGameStageBackgroundResource(currentStage, 3));
-		this.bgs4 = Utils.getTexture(assetManager, Resource.getGameStageBackgroundResource(currentStage, 4));
+	public BackgroundLoader(int currentStage) {
+		this.surface = new TextureRegion(Utils.getTextureWithFilter( Resource.getGameStageGroundBackgroundResource(currentStage)));
+		this.bgs0 = Utils.getTexture( Resource.getGameStageBackgroundResource(currentStage, 0));
+		this.bgs1 = Utils.getTexture( Resource.getGameStageBackgroundResource(currentStage, 1));
+		this.bgs2 = Utils.getTexture( Resource.getGameStageBackgroundResource(currentStage, 2));
+		this.bgs3 = Utils.getTexture( Resource.getGameStageBackgroundResource(currentStage, 3));
+		this.bgs4 = Utils.getTexture( Resource.getGameStageBackgroundResource(currentStage, 4));
 		this.displayWidth = Game.getWidth();
 	}
 

@@ -20,13 +20,13 @@ public class PlayerOnRampProcessor {
 	private PlayerTextureProcessor playerTextureProcessor;
 	private Player player;
 
-	public PlayerOnRampProcessor(Body sledBody, float playerSpeedOnRamp, float playerSpeedAfterLeftRamp, Player player, AssetManager assetManager) {
+	public PlayerOnRampProcessor(Body sledBody, float playerSpeedOnRamp, float playerSpeedAfterLeftRamp, Player player) {
 		super();
 		this.sledBody = sledBody;
 		this.playerSpeedOnRamp = playerSpeedOnRamp;
 		this.playerSpeedAfterLeftRamp = playerSpeedAfterLeftRamp;
 		this.player = player;
-		playerTextureProcessor = new PlayerTextureProcessor(player, assetManager);
+		playerTextureProcessor = new PlayerTextureProcessor(player);
 	}
 
 	public void processPlayerOnRamp() {

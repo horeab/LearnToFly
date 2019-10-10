@@ -14,18 +14,18 @@ import libgdx.game.lib.learntofly.util.Utils;
 
 public class GliderCreator extends SensorAccesoryCreator {
 
-	public GliderCreator(World world, Body playerBody, Integer accesoryLevel, AssetManager assetManager) {
+	public GliderCreator(World world, Body playerBody, Integer accesoryLevel) {
 		super(world, playerBody, accesoryLevel, "glider");
 		if (hasAccesory()) {
 			Resource inGameShopResource = Resource.getInGameShopResource(GliderLevel.SHOP_ID, accesoryLevel);
-			Texture textureWithFilter = Utils.getTextureWithFilter(assetManager, inGameShopResource);
+			Texture textureWithFilter = Utils.getTextureWithFilter( inGameShopResource);
 			int width = textureWithFilter.getWidth();
 			int height = textureWithFilter.getHeight();
-			TextureAnimation gliderSingle = new TextureAnimation(inGameShopResource, "gliderSingle", Arrays.asList(0), width, height, assetManager);
+			TextureAnimation gliderSingle = new TextureAnimation(inGameShopResource, "gliderSingle", Arrays.asList(0), width, height);
 			gliderSingle.setFixedAngle(90f);
 			gliderSingle.setxOffset(-6);
 			animations.put("gliderSingle", gliderSingle);
-			TextureAnimation glider = new TextureAnimation(inGameShopResource, "glider", Arrays.asList(0), width, height, assetManager);
+			TextureAnimation glider = new TextureAnimation(inGameShopResource, "glider", Arrays.asList(0), width, height);
 			animations.put("glider", glider);
 			setAnimationToPlay("gliderSingle");
 		}
