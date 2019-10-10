@@ -77,14 +77,14 @@ public class Game extends libgdx.game.Game {
     protected void displayScreenAfterAssetsLoad() {
         //		 gameStateManager.pushState(new AchievementsScreen(gameStateManager, new GameInfo(3, 1, 23, 12, 12, 6, 6, 6)));
 //		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(3, 1, 23,   9, 9, 5, 5, 5)));
-//		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 1, 12, 6, 1, 1)));
+		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 1, 12, 6, 1, 1)));
 //		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 12, 0, 0, 0, 0)));
 //		 gameStateManager.pushState(new UpgradeMenu(gameStateManager, new GameInfo(3, 4, 10000, 7, 2, 2, 6, 2)));
 //		 gameStateManager.pushState(new ScrollShopMenu(gameStateManager, GliderLevel.SHOP_ID, new GameInfo(3, 1, 21113, 3, 2, 1, 0, 0)));
 //		 gameStateManager.pushState(new TutorialScreen(gameStateManager, new GameInfo(3, 1, 23, 3, 2, 0, 5, 2), TutorialScreenType.ROCKET));
 //		 gameStateManager.pushState(new StageScreen(gameStateManager, new GameInfo(0, 1, 0, 0, 0, 0, 0, 0), StageScreenType.START_GAME));
 //		 gameStateManager.pushState(new GameFinishedScreen(gameStateManager, new GameInfo(3, 1, 23, 12,12, 6, 6, 6)));
-		 gameStateManager.pushState(new MainMenu(gameStateManager, null));
+//		 gameStateManager.pushState(new MainMenu(gameStateManager, null));
     }
 
     public OrthographicCamera getCam() {
@@ -177,7 +177,8 @@ public class Game extends libgdx.game.Game {
     public void render() {
         super.render();
         if (gameStateManager != null) {
-            doPhysicsStep(Gdx.graphics.getDeltaTime());
+            float dt = 1f / 68f;
+            doPhysicsStep(dt);
         }
     }
 

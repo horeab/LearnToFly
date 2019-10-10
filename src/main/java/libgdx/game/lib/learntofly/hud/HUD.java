@@ -217,7 +217,7 @@ public class HUD {
                     scale,// scale
                     0);
             sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-            bitmapFont.draw(sb, text, x, y);
+//            bitmapFont.draw(sb, text, x, y);
         }
     }
 
