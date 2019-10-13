@@ -85,6 +85,10 @@ public abstract class GameState {
         hudCam = game.getHudCam();
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     public void dispose() {
         stage.dispose();
     }

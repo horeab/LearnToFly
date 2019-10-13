@@ -1,6 +1,5 @@
 package libgdx.game.lib.learntofly.hud;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +13,8 @@ import libgdx.game.lib.learntofly.states.Play;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.resources.FontManager;
+import libgdx.utils.model.FontColor;
 
 public class HUD {
     public static final int NUMBER_CHARACTER_WIDTH = 27;
@@ -31,9 +32,6 @@ public class HUD {
     private CreateFinishPopup createFinishPopup;
     private CreateAchievmentPopup createAchievmentPopup;
 
-    private TextureRegion[] font;
-    private TextureRegion[] greenNrfont;
-
     private TextureRegion fuelBarEmptyBackground;
     private TextureRegion speedometer;
     private TextureRegion speedNeedle;
@@ -43,38 +41,16 @@ public class HUD {
     private float displayHeight;
 
     public HUD(Player player, PlayerAttrs playerAttrs, LibgdxControlUtils libgdxControlUtils) {
-        initFont();
         this.displayWidth = Game.getWidth();
         this.displayHeight = Game.getHeight();
-        createFinishPopup = new CreateFinishPopup(font, playerAttrs);
-        createAchievmentPopup = new CreateAchievmentPopup(font, libgdxControlUtils);
+        createFinishPopup = new CreateFinishPopup(playerAttrs);
+        createAchievmentPopup = new CreateAchievmentPopup(libgdxControlUtils);
         fuelBarFullTexture = Utils.getTextureWithFilter(Resource.fuel_bar_full);
         fuelBarEmptyBackground = new TextureRegion(Utils.getTextureWithFilter(Resource.fuel_bar_empty), 0, 0, 8, SPEEDOMETER_HEIGHT);
         speedometer = new TextureRegion(Utils.getTexture(Resource.speedometer), 0, 0, SPEEDOMETER_WIDTH * 2, SPEEDOMETER_HEIGHT * 2);
         Texture speedNeedleTexture = Utils.getTexture(Resource.speed_needle);
         speedNeedle = new TextureRegion(speedNeedleTexture, 0, 0, SPEEDNEEDLE_WIDTH * 2, SPEEDNEEDLE_HEIGHT * 2);
         this.player = player;
-    }
-
-    private void initFont() {
-        Texture nr = Utils.getTextureWithFilter(Resource.numbers);
-        font = new TextureRegion[62];
-        for (int i = 0; i < 10; i++) {
-            font[i] = new TextureRegion(nr, i * NUMBER_CHARACTER_WIDTH, 0, NUMBER_CHARACTER_WIDTH, 40);
-        }
-        Texture upper = Utils.getTextureWithFilter(Resource.alphabet_upper);
-        for (int i = 10; i < 36; i++) {
-            font[i] = new TextureRegion(upper, (i - 10) * ALPHA_UPPER_CHARACTER_WIDTH, 0, ALPHA_UPPER_CHARACTER_WIDTH, 40);
-        }
-        Texture lower = Utils.getTextureWithFilter(Resource.alphabet_lower);
-        for (int i = 36; i < 62; i++) {
-            font[i] = new TextureRegion(lower, (i - 10 - 26) * ALPHA_LOWER_CHARACTER_WIDTH, 0, ALPHA_LOWER_CHARACTER_WIDTH, 40);
-        }
-        Texture greenNr = Utils.getTextureWithFilter(Resource.green_numbers);
-        greenNrfont = new TextureRegion[10];
-        for (int i = 0; i < 10; i++) {
-            greenNrfont[i] = new TextureRegion(greenNr, i * NUMBER_CHARACTER_WIDTH, 0, NUMBER_CHARACTER_WIDTH, 40);
-        }
     }
 
     public int getFuelbarXPos() {
@@ -95,7 +71,7 @@ public class HUD {
                        int maxSpeedAllowed) {
         if (gameRunState == Play.GameRunState.RUN) {
             // Draw distance
-            drawFont(sb, player.getDisplayDistance() + "", displayWidth / 2, getHeightPercent(85, displayHeight), font, getFontScale());
+            drawFont(sb, player.getDisplayDistance() + "", displayWidth / 2, getHeightPercent(85, displayHeight), FontColor.BLACK, getFontScale());
             if (hasRocket) {
                 drawFuelBar(sb, availableFuel);
             }
@@ -163,13 +139,13 @@ public class HUD {
                 "0",
                 getFuelbarXPos() - SPEEDOMETER_WIDTH / 1.05f,
                 getFuelbarYPos(displayHeight) + SPEEDNEEDLE_HEIGHT / 5,
-                greenNrfont,
+                FontColor.GREEN,
                 fontScale);
         drawFont(sb,
                 speedAllowed + "",
                 getFuelbarXPos() - getTextWidth(speedAllowed + "", fontScale) / 2 - SPEEDOMETER_WIDTH / 30,
                 SPEEDOMETER_HEIGHT - SPEEDOMETER_WIDTH / 20,
-                greenNrfont,
+                FontColor.GREEN,
                 fontScale);
     }
 
@@ -181,44 +157,15 @@ public class HUD {
         return (int) Utils.getValueForPercent(displayWidth, percent);
     }
 
-    static void drawFont(SpriteBatch sb, String s, float x, float y, TextureRegion[] font, float scale) {
-        drawFont(sb, s, x, y, font, scale, 1f);
+    static void drawFont(SpriteBatch sb, String s, float x, float y, FontColor fontColor, float scale) {
+        drawFont(sb, s, x, y, fontColor, scale, 1f);
     }
 
-    static void drawFont(SpriteBatch sb, String text, float x, float y, TextureRegion[] font, float scale, float alphaValue) {
-        int index = 0;
-        for (int i = 0; i < text.length(); i++) {
-
-            char c = text.charAt(i);
-            if (c >= '0' && c <= '9') {
-                c -= '0';
-                index = c;
-            } else if (c >= 'A' && c <= 'Z') {
-                c -= 'A';
-                index = c + 10;
-            } else if (c >= 'a' && c <= 'z') {
-                c -= 'a';
-                index = c + 10 + 26;
-            } else if (c == ' ') {
-                continue;
-            }
-            int nrOfSpaces = nrOfSpaces(text, i);
-            float characterX = x + (i - nrOfSpaces) * (NUMBER_CHARACTER_WIDTH * (scale / 1.1f)) + nrOfSpaces * (NUMBER_CHARACTER_WIDTH * (scale / 1.6f));
-            sb.setColor(1.0f, 1.0f, 1.0f, alphaValue);
-            BitmapFont bitmapFont = Game.getInstance().getFontManager().getFont();
-            sb.draw(font[index],
-                    characterX,
-                    y,
-                    0,// origin
-                    0,// origin
-                    font[c].getRegionWidth(),
-                    font[c].getRegionHeight(),
-                    scale,// scale
-                    scale,// scale
-                    0);
-            sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-//            bitmapFont.draw(sb, text, x, y);
-        }
+    static void drawFont(SpriteBatch sb, String text, float x, float y, FontColor fontColor, float scale, float alphaValue) {
+        y = y + Utils.getValueForDisplayHeightPercent(4);
+        BitmapFont bitmapFont = Game.getInstance().getFontManager().getFont(fontColor);
+        bitmapFont.getData().setScale(scale);
+        bitmapFont.draw(sb, text, x, y);
     }
 
     public static float getTextWidth(String text, float scale) {
