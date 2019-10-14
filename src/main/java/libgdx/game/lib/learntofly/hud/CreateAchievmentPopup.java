@@ -110,14 +110,14 @@ public class CreateAchievmentPopup {
                 popupX + extraMargin,
                 height + Utils.getValueForDisplayHeightPercent(9),
                 FontColor.BLACK,
-                HUD.getPopupFontScale(displayWidth, displayHeight),
+                Game.STANDARD_FONT_SIZE,
                 textAlphaValue);
         HUD.drawFont(sb,
                 text2,
                 popupX + extraMargin + text2Margin,
                 height + Utils.getValueForDisplayHeightPercent(2),
                 FontColor.BLACK,
-                HUD.getPopupFontScale(displayWidth, displayHeight),
+                Game.STANDARD_FONT_SIZE,
                 textAlphaValue);
     }
 
@@ -157,13 +157,13 @@ public class CreateAchievmentPopup {
         int textWidth = (int) HUD.getTextWidth(text, HUD.getPopupFontScale(displayWidth, displayHeight));
         int rewardMargin = (textWidth - (int) HUD.getTextWidth(GameState.getLabel("reward", cashReward), HUD.getPopupFontScale(displayWidth, displayHeight))) / 2;
         float extraMargin = HUD.NUMBER_CHARACTER_WIDTH / 2.5f;
-        HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight), textAlphaValue);
+        HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, Game.STANDARD_FONT_SIZE, textAlphaValue);
         HUD.drawFont(sb,
                 GameState.getLabel("reward", cashReward),
                 labelX + extraMargin + rewardMargin,
                 y + Utils.getValueForDisplayHeightPercent(1),
                 FontColor.BLACK,
-                HUD.getPopupFontScale(displayWidth, displayHeight),
+                Game.STANDARD_FONT_SIZE,
                 textAlphaValue);
         drawCoins(sb, y + 2, labelX + extraMargin + rewardMargin + 50, cashReward);
     }

@@ -199,12 +199,12 @@ public class CreateFinishPopup {
         sb.draw(bar, xValue, y);
         // counter label
         float textY = y;
-        HUD.drawFont(sb, counterLabel, labelXValue, textY, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+        HUD.drawFont(sb, counterLabel, labelXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
         // counter
-        HUD.drawFont(sb, setFrontSpace(BigDecimal.valueOf(Math.ceil(currentCounterToDisplay)).setScale(0).toString()), counterXValue, textY, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+        HUD.drawFont(sb, setFrontSpace(BigDecimal.valueOf(Math.ceil(currentCounterToDisplay)).setScale(0).toString()), counterXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
         if (showEndInfo) {
             // counter cash
-            HUD.drawFont(sb, Integer.toString(cashWon), cashXValue, textY, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+            HUD.drawFont(sb, Integer.toString(cashWon), cashXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
             // coin image
             drawCoins(sb, textY, cashXValue, cashWon);
         }
@@ -224,18 +224,18 @@ public class CreateFinishPopup {
     }
 
     private void drawCurrentDay(SpriteBatch sb, float y, float x) {
-        HUD.drawFont(sb, GameState.getLabel("day", gameInfoManager.getCurrentDay()), x, y, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+        HUD.drawFont(sb, GameState.getLabel("day", gameInfoManager.getCurrentDay()), x, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
     }
 
     private void drawAchievementsCash(SpriteBatch sb, float y, float labelX, float cashX) {
-        HUD.drawFont(sb, GameState.getLabel("achievements_earnings"), labelX, y, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight) * 0.9f);
-        HUD.drawFont(sb, playerAttrs.getGainedAchievementsReward() + "", cashX, y, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+        HUD.drawFont(sb, GameState.getLabel("achievements_earnings"), labelX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        HUD.drawFont(sb, playerAttrs.getGainedAchievementsReward() + "", cashX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
         drawCoins(sb, y, cashX, playerAttrs.getGainedAchievementsReward());
     }
 
     private void drawTotal(SpriteBatch sb, float y, float labelX, float cashX, int total) {
-        HUD.drawFont(sb, GameState.getLabel("total_earnings"), labelX, y, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
-        HUD.drawFont(sb, total + "", cashX, y, FontColor.BLACK, HUD.getPopupFontScale(displayWidth, displayHeight));
+        HUD.drawFont(sb, GameState.getLabel("total_earnings"), labelX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        HUD.drawFont(sb, total + "", cashX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
         drawCoins(sb, y, cashX, total);
     }
 

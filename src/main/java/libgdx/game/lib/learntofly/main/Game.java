@@ -33,6 +33,7 @@ public class Game extends libgdx.game.Game {
 
     public static final int STANDARD_WIDTH = 400;
     public static final int STANDARD_HEIGHT = 240;
+    public static final int STANDARD_FONT_SIZE = 2;
 
     private static Game instance;
 
@@ -44,7 +45,6 @@ public class Game extends libgdx.game.Game {
     private OrthographicCamera cam;
     private OrthographicCamera hudCam;
 
-    private FontManager fontManager;
     private GameStateManager gameStateManager;
 
     private float accumulator;
@@ -64,13 +64,6 @@ public class Game extends libgdx.game.Game {
         displayWidth = null;
         this.language = language;
         Game.gameMode = gameMode;
-        fontManager = new
-                FontManager() {
-                    @Override
-                    protected String getGameAllFontChars() {
-                        return "";
-                    }
-                };
     }
 
     @Override
@@ -78,7 +71,7 @@ public class Game extends libgdx.game.Game {
         setScreen(null);
         //		 gameStateManager.pushState(new AchievementsScreen(gameStateManager, new GameInfo(3, 1, 23, 12, 12, 6, 6, 6)));
 //		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(3, 1, 23,   9, 9, 5, 5, 5)));
-		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 1, 12, 6, 1, 1)));
+        gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 1, 12, 6, 1, 1)));
 //		 gameStateManager.pushState(new Play(gameStateManager, new GameInfo(1, 1, 1, 12, 0, 0, 0, 0)));
 //		 gameStateManager.pushState(new UpgradeMenu(gameStateManager, new GameInfo(3, 4, 10000, 7, 2, 2, 6, 2)));
 //		 gameStateManager.pushState(new ScrollShopMenu(gameStateManager, GliderLevel.SHOP_ID, new GameInfo(3, 1, 21113, 3, 2, 1, 0, 0)));
@@ -98,10 +91,6 @@ public class Game extends libgdx.game.Game {
 
     public OrthographicCamera getHudCam() {
         return hudCam;
-    }
-
-    public FontManager getFontManager() {
-        return fontManager;
     }
 
     @Override
