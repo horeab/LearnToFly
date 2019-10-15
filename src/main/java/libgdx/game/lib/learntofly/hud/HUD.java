@@ -1,10 +1,15 @@
 package libgdx.game.lib.learntofly.hud;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.achievements.Achievement;
 import libgdx.game.lib.learntofly.entities.player.Player;
 import libgdx.game.lib.learntofly.entities.player.PlayerAttrs;
@@ -14,13 +19,13 @@ import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.FontManager;
+import libgdx.resources.MainResource;
+import libgdx.resources.gamelabel.MainGameLabel;
+import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 import libgdx.utils.model.FontConfig;
 
 public class HUD {
-    public static final int NUMBER_CHARACTER_WIDTH = 27;
-    private static final int ALPHA_UPPER_CHARACTER_WIDTH = 33;
-    private static final int ALPHA_LOWER_CHARACTER_WIDTH = 33;
 
     private static final float DEFAULT_SPEED_ANGLE = 90f;
 
@@ -72,7 +77,8 @@ public class HUD {
                        int maxSpeedAllowed) {
         if (gameRunState == Play.GameRunState.RUN) {
             // Draw distance
-            drawFont(sb, player.getDisplayDistance() + "", displayWidth / 2, getHeightPercent(85, displayHeight), FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+            drawFont(sb, player.getDisplayDistance() + "", displayWidth / 2, getHeightPercent(85, displayHeight),
+                    new FontConfig(FontColor.WHITE.getColor(), FontColor.BLACK.getColor(), Math.round(Game.STANDARD_FONT_SIZE * 1.2f), 3f), 1f);
             if (hasRocket) {
                 drawFuelBar(sb, availableFuel);
             }
@@ -83,6 +89,11 @@ public class HUD {
         }
     }
 
+    private static float getFontScale() {
+        return 0.5f;
+    }
+
+    @SuppressWarnings("unused")
     static float getPopupFontScale(float width, float height) {
         return 0.33f;
     }
@@ -129,7 +140,7 @@ public class HUD {
     }
 
     private void drawSpeedNr(SpriteBatch sb, int speedAllowed) {
-        float fontScale = Game.STANDARD_FONT_SIZE;
+        float fontScale = Game.STANDARD_FONT_SIZE / 1.5f;
         // int halfSpeedAllowed = speedAllowed / 2;
         drawFont(sb,
                 "0",
@@ -140,11 +151,10 @@ public class HUD {
                         Math.round(fontScale), 2f), 1f);
         drawFont(sb,
                 speedAllowed + "",
-                getFuelbarXPos() - getTextWidth(speedAllowed + "", fontScale) / 2 - SPEEDOMETER_WIDTH / 30,
+                getFuelbarXPos() - getTextWidth(speedAllowed + ""),
                 SPEEDOMETER_HEIGHT - SPEEDOMETER_WIDTH / 20,
-                new FontConfig(FontColor.GREEN.getColor(),
-                        FontColor.BLACK.getColor(),
-                        Math.round(fontScale), 2f), 1f);
+                new FontConfig(FontColor.GREEN.getColor(), FontColor.BLACK.getColor(), Math.round(fontScale), 2f),
+                1f);
     }
 
     public static int getHeightPercent(int percent, float displayHeight) {
@@ -155,25 +165,23 @@ public class HUD {
         return (int) Utils.getValueForPercent(displayWidth, percent);
     }
 
-    static void drawFont(SpriteBatch sb, String s, float x, float y, FontColor fontColor, int scale) {
-        drawFont(sb, s, x, y, fontColor, scale, 1f);
+    static void drawFont(SpriteBatch sb, String s, float x, float y, FontColor fontColor, int fontSize) {
+        drawFont(sb, s, x, y, fontColor, fontSize, 1f);
     }
 
-    static void drawFont(SpriteBatch sb, String text, float x, float y, FontColor fontColor, int scale, float alphaValue) {
-        drawFont(sb, text, x, y, new FontConfig(fontColor.getColor(), fontColor.getColor(), scale, FontManager.STANDARD_BORDER_WIDTH), alphaValue);
+    static void drawFont(SpriteBatch sb, String text, float x, float y, FontColor fontColor, int fontSize, float alphaValue) {
+        drawFont(sb, text, x, y, new FontConfig(fontColor.getColor(), fontColor.getColor(), fontSize, FontManager.STANDARD_BORDER_WIDTH), alphaValue);
     }
 
     static void drawFont(SpriteBatch sb, String text, float x, float y, FontConfig fontConfig, float alphaValue) {
-        y = y + Utils.getValueForDisplayHeightPercent(4);
+        y = y + Utils.getValueForDisplayHeightPercent(4.5f);
         BitmapFont bitmapFont = Game.getInstance().getFontManager().getFont(fontConfig);
+        bitmapFont.getData().setScale(getFontScale());
         bitmapFont.draw(sb, text, x, y);
     }
 
-    public static float getTextWidth(String text, float scale) {
-        int i = text.length() - 1;
-        int nrOfSpaces = nrOfSpaces(text, i);
-        float characterX = (i - nrOfSpaces) * (NUMBER_CHARACTER_WIDTH * (scale / 1.1f)) + nrOfSpaces * (NUMBER_CHARACTER_WIDTH * (scale / 1.6f));
-        return characterX + NUMBER_CHARACTER_WIDTH;
+    public static float getTextWidth(String text) {
+        return text.length() * ScreenDimensionsManager.getScreenWidthValue(3f);
     }
 
     private static int nrOfSpaces(String s, int currentPos) {

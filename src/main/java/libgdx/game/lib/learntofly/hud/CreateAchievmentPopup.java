@@ -14,6 +14,7 @@ import libgdx.game.lib.learntofly.util.B2DSprites;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 
 public class CreateAchievmentPopup {
@@ -68,7 +69,7 @@ public class CreateAchievmentPopup {
         if (popupAlphaValue >= 0f && currentAchievement != null) {
             TextureRegion achievementImage = getAchievementTexture(currentAchievement.getAchievementId());
             String text = currentAchievement.getAchievementLabel(currentAchievement.getValue());
-            int popupWidth = (int) HUD.getTextWidth(text, HUD.getPopupFontScale(displayWidth, displayHeight)) + ACIEVEMENT_TEXTURE_SIDE_SIZE;
+            int popupWidth = (int) HUD.getTextWidth(text) + ACIEVEMENT_TEXTURE_SIDE_SIZE;
             achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("339933")));
             float alphaValue = popupAlphaValue;
             if (playerIsCoveredByPopup(displayAltitude)) {
@@ -95,16 +96,16 @@ public class CreateAchievmentPopup {
             text1 = GameState.getLabel("play_congratulations");
             text2 = GameState.getLabel("play_game_finished");
         }
-        int text1Width = (int) HUD.getTextWidth(text1, HUD.getPopupFontScale(displayWidth, displayHeight));
-        int text2Margin = (text1Width - (int) HUD.getTextWidth(text2, HUD.getPopupFontScale(displayWidth, displayHeight))) / 2;
-        int popupWidth = (int) HUD.getTextWidth(text1, HUD.getPopupFontScale(displayWidth, displayHeight));
+        int text1Width = (int) HUD.getTextWidth(text1);
+        int text2Margin = (text1Width - (int) HUD.getTextWidth(text2)) / 2;
+        int popupWidth = (int) HUD.getTextWidth(text1);
         achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("FF9900")));
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
         int height = (int) Utils.getValueForDisplayHeightPercent(80);
         float popupX = Utils.getValueForPercent(displayWidth, 3);
         sb.draw(achievmentPopupTexture, popupX, height);
         sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-        float extraMargin = HUD.NUMBER_CHARACTER_WIDTH / 2.5f;
+        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(5);
         HUD.drawFont(sb,
                 text1,
                 popupX + extraMargin,
@@ -154,18 +155,18 @@ public class CreateAchievmentPopup {
     }
 
     private void drawAchievementText(SpriteBatch sb, float y, float labelX, String text, int cashReward) {
-        int textWidth = (int) HUD.getTextWidth(text, HUD.getPopupFontScale(displayWidth, displayHeight));
-        int rewardMargin = (textWidth - (int) HUD.getTextWidth(GameState.getLabel("reward", cashReward), HUD.getPopupFontScale(displayWidth, displayHeight))) / 2;
-        float extraMargin = HUD.NUMBER_CHARACTER_WIDTH / 2.5f;
-        HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, Game.STANDARD_FONT_SIZE, textAlphaValue);
+        int rewardMargin = ((int) HUD.getTextWidth(GameState.getLabel("reward", cashReward))) / 3;
+        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(10);
+        int standardFontSize = Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
+        HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, standardFontSize, textAlphaValue);
         HUD.drawFont(sb,
                 GameState.getLabel("reward", cashReward),
                 labelX + extraMargin + rewardMargin,
                 y + Utils.getValueForDisplayHeightPercent(1),
                 FontColor.BLACK,
-                Game.STANDARD_FONT_SIZE,
+                standardFontSize,
                 textAlphaValue);
-        drawCoins(sb, y + 2, labelX + extraMargin + rewardMargin + 50, cashReward);
+        drawCoins(sb, y + 2, labelX + extraMargin + rewardMargin + ScreenDimensionsManager.getScreenWidthValue(13), cashReward);
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {

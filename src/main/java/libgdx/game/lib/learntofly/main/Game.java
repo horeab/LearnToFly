@@ -33,7 +33,7 @@ public class Game extends libgdx.game.Game {
 
     public static final int STANDARD_WIDTH = 400;
     public static final int STANDARD_HEIGHT = 240;
-    public static final int STANDARD_FONT_SIZE = 2;
+    public static final int STANDARD_FONT_SIZE = 32;
 
     private static Game instance;
 

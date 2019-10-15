@@ -17,7 +17,9 @@ import libgdx.game.lib.learntofly.storemanagers.GameInfoManager;
 import libgdx.game.lib.learntofly.util.B2DSprites;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
+import libgdx.utils.model.FontConfig;
 
 public class CreateFinishPopup {
 
@@ -58,7 +60,7 @@ public class CreateFinishPopup {
     private GameInfoManager gameInfoManager;
     private PlayerAttrs playerAttrs;
 
-    private TextureRegion[] font;
+    private static final int FONT_SIZE = Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
 
     public CreateFinishPopup(PlayerAttrs playerAttrs) {
         this.displayWidth = Game.getWidth();
@@ -198,13 +200,13 @@ public class CreateFinishPopup {
         TextureRegion bar = new TextureRegion(isNewRecord ? incrementCounterRecordTexture : incrementCounterFullTexture, 0, 0, (int) barWidth, 20);
         sb.draw(bar, xValue, y);
         // counter label
-        float textY = y;
-        HUD.drawFont(sb, counterLabel, labelXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        float textY = y + ScreenDimensionsManager.getScreenHeightValue(0.5f);
+        drawFont(sb, counterLabel, labelXValue, textY);
         // counter
-        HUD.drawFont(sb, setFrontSpace(BigDecimal.valueOf(Math.ceil(currentCounterToDisplay)).setScale(0).toString()), counterXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        drawFont(sb, setFrontSpace(BigDecimal.valueOf(Math.ceil(currentCounterToDisplay)).setScale(0).toString()), counterXValue, textY);
         if (showEndInfo) {
             // counter cash
-            HUD.drawFont(sb, Integer.toString(cashWon), cashXValue, textY, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+            drawFont(sb, Integer.toString(cashWon), cashXValue, textY);
             // coin image
             drawCoins(sb, textY, cashXValue, cashWon);
         }
@@ -224,23 +226,27 @@ public class CreateFinishPopup {
     }
 
     private void drawCurrentDay(SpriteBatch sb, float y, float x) {
-        HUD.drawFont(sb, GameState.getLabel("day", gameInfoManager.getCurrentDay()), x, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        drawFont(sb, GameState.getLabel("day", gameInfoManager.getCurrentDay()), x, y);
     }
 
     private void drawAchievementsCash(SpriteBatch sb, float y, float labelX, float cashX) {
-        HUD.drawFont(sb, GameState.getLabel("achievements_earnings"), labelX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
-        HUD.drawFont(sb, playerAttrs.getGainedAchievementsReward() + "", cashX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        drawFont(sb, GameState.getLabel("achievements_earnings"), labelX, y);
+        drawFont(sb, playerAttrs.getGainedAchievementsReward() + "", cashX, y);
         drawCoins(sb, y, cashX, playerAttrs.getGainedAchievementsReward());
     }
 
     private void drawTotal(SpriteBatch sb, float y, float labelX, float cashX, int total) {
-        HUD.drawFont(sb, GameState.getLabel("total_earnings"), labelX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
-        HUD.drawFont(sb, total + "", cashX, y, FontColor.BLACK, Game.STANDARD_FONT_SIZE);
+        drawFont(sb, GameState.getLabel("total_earnings"), labelX, y);
+        drawFont(sb, total + "", cashX, y);
         drawCoins(sb, y, cashX, total);
     }
 
+    public void drawFont(SpriteBatch sb, String text, float x, float y) {
+        HUD.drawFont(sb, text, x, y, new FontConfig(FontColor.WHITE.getColor(), FontColor.BLACK.getColor(), FONT_SIZE, 2f), 1f);
+    }
+
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {
-        drawImage(sb, x + (9 * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
+        drawImage(sb, x + (ScreenDimensionsManager.getScreenWidthValue(3) * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
     }
 
     private int getXIncrement() {
