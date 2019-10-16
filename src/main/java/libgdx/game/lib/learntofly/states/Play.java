@@ -109,10 +109,19 @@ public class Play extends GameState {
 
     public Play(GameStateManager gameStateManager, GameInfo gameInfo) {
         super(gameStateManager, gameInfo);
+    }
+
+    @Override
+    public void buildStage() {
         changeGameInfo();
-        initFields();
+        initPlayFields();
         createWorldBodies();
         initDebugB2dr();
+    }
+
+    @Override
+    public void onBackKeyPress() {
+        gameStateManager.setUpgradeShopState(gameInfo);
     }
 
     private void changeGameInfo() {
@@ -123,7 +132,7 @@ public class Play extends GameState {
         b2dcam.setToOrtho(false, scaleDownPPM(Game.getWidth()), scaleDownPPM(Game.getHeight()));
     }
 
-    private void initFields() {
+    private void initPlayFields() {
         initSound();
         playerAttrs = new PlayerAttrs(gameInfo.getSelectedStage());
         inputProcessor = new MyInputProcessor();
@@ -144,9 +153,9 @@ public class Play extends GameState {
     }
 
     private void initSound() {
-        rocketSound = Utils.getSound( Resource.sound_rocket);
-        achievementSound = Utils.getSound( Resource.sound_achiev);
-        stageUnlockedSound = Utils.getSound( Resource.sound_stage_unlocked);
+        rocketSound = Utils.getSound(Resource.sound_rocket);
+        achievementSound = Utils.getSound(Resource.sound_achiev);
+        stageUnlockedSound = Utils.getSound(Resource.sound_stage_unlocked);
     }
 
     private void createWorldBodies() {
@@ -155,7 +164,7 @@ public class Play extends GameState {
         rampCreator.createRamps(10);
         player = playerCreator.createPlayer((int) rampCreator.getDownwardsRampHeight(), contactListener);
         createAccesories();
-        hud = new HUD(player, playerAttrs,  libgdxControlUtils);
+        hud = new HUD(player, playerAttrs, libgdxControlUtils);
     }
 
     private void createAccesories() {
@@ -165,9 +174,7 @@ public class Play extends GameState {
         rocketCreator = new RocketCreator(world, player.getBody(), gameInfo.getRocketLevel());
     }
 
-    @Override
     public void handleInput() {
-        super.handleInput();
         if ((BBInput.isWholeScreenPressed() || Gdx.input.isKeyPressed(Keys.ESCAPE))
                 && gameRunState == GameRunState.GAME_FINISHED
                 && !isWholeScreenPressed) {
@@ -176,7 +183,7 @@ public class Play extends GameState {
                 if (gameInfoManager.displayGameFinishedScreen()) {
                     gameStateManager.setGameFinishedState(gameInfo);
                 } else {
-                    gameStateManager.setUpgradeShopState(gameInfo);
+                    onBackKeyPress();
                 }
             } else {
                 hud.getCreateFinishPopup().showAllInfos();
@@ -185,7 +192,7 @@ public class Play extends GameState {
             isWholeScreenPressed = false;
         } else {
             if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-                processBackKeyPressed();
+                onBackKeyPress();
             }
             if (BBInput.isGoUpPressed()) {
                 player.pushUp();
@@ -229,7 +236,9 @@ public class Play extends GameState {
             player.setPreviousMovingAngle(player.getMovingAngle());
             player.setPreviousPlayerPoint();
             updateAccesoriesPreviousPlayerPoint();
-            world.step(dt, 8, 3);
+            if (!screenDisposed) {
+                world.step(dt, 8, 3);
+            }
             player.update(dt);
 
             updatePlayerAttrs();
@@ -243,7 +252,7 @@ public class Play extends GameState {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         // if (!debug) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // }

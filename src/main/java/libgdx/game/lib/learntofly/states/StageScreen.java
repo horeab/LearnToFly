@@ -19,6 +19,7 @@ import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 
 public class StageScreen extends GameState {
 
@@ -34,35 +35,50 @@ public class StageScreen extends GameState {
 
 	public StageScreen(GameStateManager gameStateManager, GameInfo gameInfo, StageScreenType stageScreenType) {
 		super(gameStateManager, gameInfo);
-
 		this.stageScreenType = stageScreenType;
+	}
 
+	@Override
+	public void buildStage() {
 		Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
-
+		allTable.setFillParent(true);
 		Table btnsTable = new Table(skin);
 
 		allTable
 				.add(btnsTable)
-				.width(displayWidth)
+				.width(ScreenDimensionsManager.getScreenWidth())
 				.height(getBtnsTableHeight())
 				.row();
 		for (ImageButton stage : createStageBtns()) {
 			btnsTable.add(stage)
 					.width(getBtnSide())
 					.height(getBtnHeight())
-					.pad(displayWidth / 100f);
+					.pad(ScreenDimensionsManager.getScreenWidth() / 100f);
 		}
 
 		addFinishTable(allTable);
-		stage.addActor(allTable);
+		addActor(allTable);
 	}
 
+	@Override
+	public void onBackKeyPress() {
+		stageScreenBackBtnClick();
+	}
+
+	private void stageScreenBackBtnClick() {
+		if (((StageScreen) this).getStageScreenType() == StageScreen.StageScreenType.START_GAME) {
+			gameStateManager.setMainMenuState();
+		} else if (((StageScreen) this).getStageScreenType() == StageScreen.StageScreenType.IN_GAME
+				|| ((StageScreen) this).getStageScreenType() == StageScreen.StageScreenType.FROM_LABEL_CLICK) {
+			gameStateManager.setUpgradeShopState(gameInfo);
+		}
+	}
 	private float getBtnHeight() {
-		return getBtnSide() + Utils.getValueForPercent(displayWidth, 5);
+		return getBtnSide() + Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 5);
 	}
 
 	private float getBtnSide() {
-		return Utils.getValueForPercent(displayWidth, 22);
+		return Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 22);
 	}
 
 	private void addFinishTable(Table allTable) {
@@ -71,8 +87,8 @@ public class StageScreen extends GameState {
 		int finishTablePadTop = 20;
 		finishTable
 				.add(finishImage)
-				.width(displayWidth / 7)
-				.padTop(Utils.getValueForPercent(displayHeight, finishTablePadTop));
+				.width(ScreenDimensionsManager.getScreenWidth() / 7)
+				.padTop(Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), finishTablePadTop));
 		Table labelTable = createLabelTable(
 				achievementsManager.neededAchievementsToUnlock(5, Achievement.DISTANCE_ACHIEVEMENT),
 				achievementsManager.neededAchievementsToUnlock(5, Achievement.ALTITUDE_ACHIEVEMENT),
@@ -81,10 +97,10 @@ public class StageScreen extends GameState {
 				);
 		finishTable
 				.add(labelTable)
-				.padTop(Utils.getValueForPercent(displayHeight, finishTablePadTop));
+				.padTop(Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), finishTablePadTop));
 		allTable
 				.add(finishTable)
-				.width(displayWidth)
+				.width(ScreenDimensionsManager.getScreenWidth())
 				.height(getBtnsTableHeight())
 				.row();
 	}
@@ -115,16 +131,16 @@ public class StageScreen extends GameState {
 					Resource.lock));
 			lockImage.scaleBy(-0.5f);
 			stageImgTable.add(lockImage)
-					.padLeft(displayWidth / 10)
-					.padTop(Utils.getValueForPercent(displayWidth, -8))
-					.padBottom(displayHeight / 40).row();
+					.padLeft(ScreenDimensionsManager.getScreenWidth() / 10)
+					.padTop(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), -8))
+					.padBottom(ScreenDimensionsManager.getScreenHeight() / 40).row();
 			Table labelTable = createLabelTable(
 					achievementsManager.neededAchievementsToUnlock(stageNr, Achievement.DISTANCE_ACHIEVEMENT),
 					achievementsManager.neededAchievementsToUnlock(stageNr, Achievement.ALTITUDE_ACHIEVEMENT),
 					achievementsManager.neededAchievementsToUnlock(stageNr, Achievement.DURATION_ACHIEVEMENT),
 					achievementsManager.neededAchievementsToUnlock(stageNr, Achievement.SPEED_ACHIEVEMENT)
 					);
-			stageImgTable.add(labelTable).width(getBtnSide()).padLeft(displayWidth / 10);
+			stageImgTable.add(labelTable).width(getBtnSide()).padLeft(ScreenDimensionsManager.getScreenWidth() / 10);
 			button.setTouchable(Touchable.disabled);
 			stageImgTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE,
 					0.8f));
@@ -134,7 +150,7 @@ public class StageScreen extends GameState {
 			Table labelBackgroundTable = new Table(skin);
 			labelBackgroundTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE, 0.6f));
 			labelBackgroundTable.add(label);
-			stageImgTable.add(labelBackgroundTable).padTop(displayHeight / 10).width(getBtnSide()).row();
+			stageImgTable.add(labelBackgroundTable).padTop(ScreenDimensionsManager.getScreenHeight() / 10).width(getBtnSide()).row();
 			if (gameInfo.getSelectedStage() == stageNr) {
 				stageImgTable.setBackground(Utils.getDrawable( Resource.stage_play));
 				stageImgTable.add().height(Utils.getValueForDisplayHeightPercent(43));
@@ -172,13 +188,13 @@ public class StageScreen extends GameState {
 		int padTop = 1;
 		achTable
 				.add(label)
-				.padTop(Utils.getValueForPercent(displayHeight, padTop));
+				.padTop(Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), padTop));
 		achTable
 				.add(xlabel)
-				.padTop(Utils.getValueForPercent(displayHeight, padTop));
+				.padTop(Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), padTop));
 		achTable
 				.add(achievImg)
-				.padTop(-Utils.getValueForPercent(displayHeight, 21 - padTop))
+				.padTop(-Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), 21 - padTop))
 				.row();
 	}
 
@@ -202,6 +218,6 @@ public class StageScreen extends GameState {
 	}
 
 	private float getBtnsTableHeight() {
-		return Utils.getValueForPercent(displayHeight, 33);
+		return Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), 33);
 	}
 }

@@ -12,6 +12,7 @@ import libgdx.game.lib.learntofly.to.menu.ScrollShopInfo;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -38,29 +39,36 @@ public class ScrollShopMenu extends GameState {
 
     public ScrollShopMenu(GameStateManager gameStateManager, int shopId, GameInfo gameInfo) {
         super(gameStateManager, gameInfo);
-
         // ////////FOR TESTING///////////////////////
         // this.gameInfo = gameInfoManager.createGameInfo();
         // this.gameInfo.setCash(55555);
         // ///////////////////////////////
-
         this.currentShopLevel = getShopLevel(shopId, gameInfo.getLevelForShopId(shopId));
+    }
+
+    @Override
+    public void buildStage() {
 
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
         Table contentTable = libgdxControlUtils.createContentTable();
-
+        allTable.setFillParent(true);
         headerInfo = libgdxControlUtils.createHeaderTable(gameInfo.getSelectedStage(), gameInfo.getCurrentDay(), gameInfo.getCash(), gameStateManager, gameInfo);
-        allTable.add(headerInfo.getHeaderTable()).height(getHeaderHeight()).width(displayWidth);
+        allTable.add(headerInfo.getHeaderTable()).height(getHeaderHeight()).width(ScreenDimensionsManager.getScreenWidth());
         allTable.row();
-        allTable.add(contentTable).height(displayHeight - getHeaderHeight()).width(displayWidth);
+        allTable.add(contentTable).height(ScreenDimensionsManager.getScreenHeight() - getHeaderHeight()).width(ScreenDimensionsManager.getScreenWidth());
 
         ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle();
         scrollPane = new ScrollPane(createShopsTable(), scrollPaneStyle);
-        contentTable.add(scrollPane).width(displayWidth / 1.3f);
+        contentTable.add(scrollPane).width(ScreenDimensionsManager.getScreenWidth() / 1.3f);
 
         contentTable.add(backButton).align(Align.top).width(getButtonSide()).height(getButtonSide()).padTop(getShopPadding()).padLeft(getShopPadding());
 
-        stage.addActor(allTable);
+        addActor(allTable);
+    }
+
+    @Override
+    public void onBackKeyPress() {
+        gameStateManager.setUpgradeShopState(gameInfo);
     }
 
     private Table createShopsTable() {
@@ -316,7 +324,7 @@ public class ScrollShopMenu extends GameState {
     }
 
     private float getShopWidth() {
-        return Utils.getValueForRatio(Utils.getValueForPercent(displayWidth, 50));
+        return Utils.getValueForRatio(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 50));
     }
 
     private float getImgContainerWidth() {
@@ -324,7 +332,7 @@ public class ScrollShopMenu extends GameState {
     }
 
     private float getBuyBtnWidth() {
-        return Utils.getValueForRatio(Utils.getValueForPercent(displayWidth, 15));
+        return Utils.getValueForRatio(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 15));
     }
 
     private float getImgContainerLabelTableHeight() {
@@ -352,7 +360,7 @@ public class ScrollShopMenu extends GameState {
         // scrollPanePositionInit needs to be used otherwise the scrollTo wont
         // work
         if (scrollPanePositionInit < 2) {
-            scrollPane.scrollTo(0, lastShopY - shopY, displayWidth, displayHeight);
+            scrollPane.scrollTo(0, lastShopY - shopY, ScreenDimensionsManager.getScreenWidth(), ScreenDimensionsManager.getScreenHeight());
             scrollPanePositionInit++;
         }
     }

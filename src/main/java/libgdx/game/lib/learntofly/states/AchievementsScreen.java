@@ -14,6 +14,7 @@ import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
@@ -27,20 +28,29 @@ public class AchievementsScreen extends GameState {
 
     public AchievementsScreen(GameStateManager gameStateManager, GameInfo gameInfo) {
         super(gameStateManager, gameInfo);
+    }
 
+    @Override
+    public void buildStage() {
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
+        allTable.setFillParent(true);
         Table contentTable = libgdxControlUtils.createContentTable();
 
         HeaderInfo headerInfo = libgdxControlUtils.createHeaderTable(gameInfo.getSelectedStage(), gameInfo.getCurrentDay(), gameInfo.getCash(), gameStateManager, gameInfo);
-        allTable.add(headerInfo.getHeaderTable()).height(getHeaderHeight()).width(displayWidth);
+        allTable.add(headerInfo.getHeaderTable()).height(getHeaderHeight()).width(ScreenDimensionsManager.getScreenWidth());
         allTable.row();
-        allTable.add(contentTable).height(displayHeight - getHeaderHeight()).width(displayWidth);
+        allTable.add(contentTable).height(ScreenDimensionsManager.getScreenHeight() - getHeaderHeight()).width(ScreenDimensionsManager.getScreenWidth());
 
         scrollPane = new ScrollPane(createAchievementsTable(), new ScrollPaneStyle());
-        contentTable.add(scrollPane).width(displayWidth / 1.3f);
+        contentTable.add(scrollPane).width(ScreenDimensionsManager.getScreenWidth() / 1.3f);
 
         contentTable.add(backButton).align(Align.top).padTop(getAchievementsPadding()).width(getAchievementHeight()).height(getAchievementHeight());
-        stage.addActor(allTable);
+        addActor(allTable);
+    }
+
+    @Override
+    public void onBackKeyPress() {
+        gameStateManager.setUpgradeShopState(gameInfo);
     }
 
     private List<Achievement> getAchievementsForLevel(int level) {
@@ -147,7 +157,7 @@ public class AchievementsScreen extends GameState {
     }
 
     private float getAchievementWidth() {
-        return Utils.getValueForPercent(displayWidth, 70);
+        return Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 70);
     }
 
     private float getAchievementInfoWidth() {
@@ -166,10 +176,7 @@ public class AchievementsScreen extends GameState {
         return libgdxControlUtils.getHeaderHeight();
     }
 
-    @Override
     public void update(float dt) {
-        super.update(dt);
-
         // scrollPanePositionInit needs to be used otherwise the scrollTo wont
         // work
         if (scrollPanePositionInit < 2) {
@@ -180,7 +187,7 @@ public class AchievementsScreen extends GameState {
             float firstUnachievedAchievementHeight = firstUnachievedAchievement * achHeight;
             float y = totalHeight - firstUnachievedAchievementHeight - achHeight * 2;
             System.out.println(y);
-            scrollPane.scrollTo(0, y, displayWidth, displayHeight);
+            scrollPane.scrollTo(0, y, ScreenDimensionsManager.getScreenWidth(), ScreenDimensionsManager.getScreenHeight());
             scrollPanePositionInit++;
         }
     }

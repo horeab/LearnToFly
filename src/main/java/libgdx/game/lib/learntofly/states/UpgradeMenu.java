@@ -16,6 +16,7 @@ import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.FontManager;
+import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 
 import com.badlogic.gdx.graphics.Color;
@@ -48,7 +49,13 @@ public class UpgradeMenu extends GameState {
 
         buyBtnWidth = Utils.getValueForPercent(getIncrementShopWidth(), 19);
 
+
+    }
+
+    @Override
+    public void buildStage() {
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
+        allTable.setFillParent(true);
         Table contentTable = libgdxControlUtils.createContentTable();
         shopsTable = new Table(skin);
         buttonsTable = new Table(skin);
@@ -76,12 +83,17 @@ public class UpgradeMenu extends GameState {
                 .height(getContentTableHeight());
         allTable.add(headerInfo.getHeaderTable())
                 .height(getHeaderHeight())
-                .width(displayWidth);
+                .width(ScreenDimensionsManager.getScreenWidth());
         allTable.row();
         allTable.add(contentTable)
-                .height(displayHeight - getHeaderHeight())
-                .width(displayWidth);
-        stage.addActor(allTable);
+                .height(ScreenDimensionsManager.getScreenHeight() - getHeaderHeight())
+                .width(ScreenDimensionsManager.getScreenWidth());
+        addActor(allTable);
+    }
+
+    @Override
+    public void onBackKeyPress() {
+        gameStateManager.setMainMenuState();
     }
 
     private void addButtons() {
@@ -227,7 +239,7 @@ public class UpgradeMenu extends GameState {
         Table allContainer = new Table(skin);
         TextButton buyButton = new TextButton(getLabel("buy"), skin);
         buyButton.getStyle().font = Game.getInstance().getFontManager().getFont();
-        buyButton.getLabel().setFontScale(libgdxControlUtils.getFontScale());
+        buyButton.getLabel().setFontScale(FontManager.getSmallFontDim());
         buyButtonClick(buyButton, shopType);
         float levelContainerWidth = getIncrementShopWidth() - buyBtnWidth;
         Table levelContainerTable = new Table(skin);
@@ -418,7 +430,7 @@ public class UpgradeMenu extends GameState {
     }
 
     private float getContentTableHeight() {
-        return displayHeight - getHeaderHeight();
+        return ScreenDimensionsManager.getScreenHeight() - getHeaderHeight();
     }
 
     private float getHeaderHeight() {
@@ -438,7 +450,7 @@ public class UpgradeMenu extends GameState {
     }
 
     private float getButtonsTableWidth() {
-        return Utils.getValueForRatio(displayWidth) - getShopTableWidth();
+        return Utils.getValueForRatio(ScreenDimensionsManager.getScreenWidth()) - getShopTableWidth();
     }
 
     private float getSidePadding() {
@@ -446,7 +458,7 @@ public class UpgradeMenu extends GameState {
     }
 
     private float getShopWidth() {
-        return Utils.getValueForRatio(Utils.getValueForPercent(displayWidth, 20));
+        return Utils.getValueForRatio(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 20));
     }
 
 }

@@ -1,8 +1,11 @@
 package libgdx.game.lib.learntofly.util;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import libgdx.game.Game;
@@ -22,7 +25,7 @@ public class LibgdxControlCreator {
     public TextButton textButton(String text, String styleName) {
         TextButton btn = new TextButton(text, skin, styleName);
         btn.getStyle().font = Game.getInstance().getFontManager().getFont();
-        btn.getStyle().font.getData().setScale(libgdxControlUtils.getHeightDisplayRatio());
+        btn.getStyle().font.getData().setScale(FontManager.getNormalFontDim());
         return btn;
     }
 
@@ -35,7 +38,7 @@ public class LibgdxControlCreator {
 
     public Image image(String name) {
         Image image = new Image(skin, name);
-        image.setScale(libgdxControlUtils.getHeightDisplayRatio());
+        image.setScale(FontManager.getNormalFontDim());
         return image;
     }
 
@@ -48,8 +51,8 @@ public class LibgdxControlCreator {
 
     public Label label(String text) {
         Label label = new Label(text, skin);
+        label.setFontScale(FontManager.getNormalFontDim());
         label.getStyle().font = Game.getInstance().getFontManager().getFont();
-        label.getStyle().font.getData().setScale(libgdxControlUtils.getHeightDisplayRatio());
         return label;
     }
 }

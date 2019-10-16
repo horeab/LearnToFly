@@ -52,8 +52,8 @@ public class GameStateManager {
         gameStates.peek().update(dt);
     }
 
-    public void render() {
-        gameStates.peek().render();
+    public void render(float dt) {
+        gameStates.peek().render(dt);
     }
 
     public void resize(int width, int height) {
@@ -100,6 +100,8 @@ public class GameStateManager {
 
     public void pushState(GameState gameState) {
         gameStates.push(gameState);
+        gameState.buildStage();
+        gameState.afterBuildStage();
     }
 
     private void popState() {

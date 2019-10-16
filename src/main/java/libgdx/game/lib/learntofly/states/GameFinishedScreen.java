@@ -4,6 +4,7 @@ import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,13 +17,22 @@ public class GameFinishedScreen extends GameState {
 
 	public GameFinishedScreen(GameStateManager gameStateManager, GameInfo gameInfo) {
 		super(gameStateManager, gameInfo);
+	}
+
+	@Override
+	public void buildStage() {
 		gameInfoManager.setGameFinishedScreen(false);
-		stage.addActor(createLayout());
+		addActor(createLayout());
+	}
+
+	@Override
+	public void onBackKeyPress() {
+		gameStateManager.setUpgradeShopState(gameInfo);
 	}
 
 	private Table createLayout() {
 		Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
-
+		allTable.setFillParent(true);
 		Label congratulationsLabel = c.label(getLabel("congratulations"));
 		congratulationsLabel.setFontScale(libgdxControlUtils.getFontScale());
 		Label finishedLabel = c.label(getLabel("finished_game", gameInfo.getCurrentDay()));
@@ -44,11 +54,11 @@ public class GameFinishedScreen extends GameState {
 		buttonsTable.add(continueTable).row();
 		buttonsTable.add(newGameTable).padTop(labelTopPad);
 
-		allTable.add(labelTable).height(valueForScaledHeight(40)).width(displayWidth).row();
-		allTable.add(buttonsTable).height(valueForScaledHeight(60)).width(displayWidth);
+		allTable.add(labelTable).height(valueForScaledHeight(40)).width(ScreenDimensionsManager.getScreenWidth()).row();
+		allTable.add(buttonsTable).height(valueForScaledHeight(60)).width(ScreenDimensionsManager.getScreenWidth());
 
-		continueTable.add(createContinueBtn()).width(Utils.getValueForPercent(displayWidth, 50)).height(getBtnHeight());
-		newGameTable.add(createNewGameBtn()).width(Utils.getValueForPercent(displayWidth, 50)).height(getBtnHeight());
+		continueTable.add(createContinueBtn()).width(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 50)).height(getBtnHeight());
+		newGameTable.add(createNewGameBtn()).width(Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 50)).height(getBtnHeight());
 		return allTable;
 	}
 
@@ -57,7 +67,7 @@ public class GameFinishedScreen extends GameState {
 	}
 
 	private float valueForScaledHeight(int percent) {
-		return Utils.getValueForPercent(displayHeight, percent);
+		return Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), percent);
 	}
 
 	private TextButton createNewGameBtn() {

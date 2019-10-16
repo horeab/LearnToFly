@@ -58,6 +58,11 @@ public class Game extends libgdx.game.Game {
             public String getGameIdPrefix() {
                 return GameIdEnum.learntofly.name();
             }
+
+            @Override
+            public boolean isPortraitMode() {
+                return false;
+            }
         }, new LearnToFlyMainDependencyManager());
         instance = this;
         displayHeight = null;
@@ -211,7 +216,7 @@ public class Game extends libgdx.game.Game {
 
     private void updating(float delta) {
         gameStateManager.update(delta);
-        gameStateManager.render();
+        gameStateManager.render(delta);
     }
 
     public Language getLanguage() {

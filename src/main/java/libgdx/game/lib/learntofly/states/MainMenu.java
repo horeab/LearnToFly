@@ -1,5 +1,6 @@
 package libgdx.game.lib.learntofly.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -11,10 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import libgdx.controls.popup.MyPopup;
+import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 
 public class MainMenu extends GameState {
 
@@ -23,7 +27,11 @@ public class MainMenu extends GameState {
     public MainMenu(GameStateManager gameStateManager, GameInfo gameInfo) {
         super(gameStateManager, gameInfo);
         initEnterGameStuff();
-        stage.addActor(createLayout());
+    }
+
+    @Override
+    public void buildStage() {
+        addActor(createLayout());
     }
 
     private void initEnterGameStuff() {
@@ -32,6 +40,7 @@ public class MainMenu extends GameState {
 
     private Table createLayout() {
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
+        allTable.setFillParent(true);
         Image background_second = c.image("background_second");
 
         Table controlsTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage(), false);
@@ -39,7 +48,7 @@ public class MainMenu extends GameState {
         soundTable.add(createSoundBtn())
                 .width(getSoundMusicBtnSide())
                 .height(getSoundMusicBtnSide())
-                .padLeft(Utils.getValueForPercent(displayWidth, 80))
+                .padLeft(ScreenDimensionsManager.getScreenWidthValue(80))
                 .padTop(valueForScaledHeight(45) * libgdxControlUtils.getWidthDisplayRatio());
         soundTable.add(createMusicBtn())
                 .width(getSoundMusicBtnSide())
@@ -76,7 +85,7 @@ public class MainMenu extends GameState {
         controlsTable.add(soundTable)
                 .height(valueForScaledHeight(5))
                 .padTop(valueForScaledHeight(soundTableTopPad))
-                .width(displayWidth).row();
+                .width(ScreenDimensionsManager.getScreenWidth()).row();
         controlsTable.add(titleTable)
                 .height(titleDr.getSprite().getHeight() / 2f)
                 .width(titleDr.getSprite().getWidth() / 2f)
@@ -84,7 +93,7 @@ public class MainMenu extends GameState {
                 .row();
         controlsTable.add(buttonsTable)
                 .height(valueForScaledHeight(65))
-                .width(displayWidth);
+                .width(ScreenDimensionsManager.getScreenWidth());
 
         continueTable.add(createContinueBtn()).width(getBtnWidth()).height(getBtnHeight());
         if (gameInfo.gameExistsInMemory()) {
@@ -137,14 +146,23 @@ public class MainMenu extends GameState {
         return musicBtn;
     }
 
+    @Override
+    public void onBackKeyPress() {
+        if (((MainMenu) this).isDialogIsShown()) {
+            ((MainMenu) this).closeShownDialog();
+        } else {
+            Gdx.app.exit();
+        }
+    }
+
     private TextButton createNewGameBtn() {
         TextButton newGame = c.textButton(getLabel("new_game"), "green");
         newGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialog = startNewGameDialog().show(stage);
-                dialog.setWidth(displayWidth / 1.09f);
-                dialog.setHeight(displayHeight / 1.9f);
+                dialog = startNewGameDialog().show(getStage());
+                dialog.setWidth(ScreenDimensionsManager.getScreenWidth() / 1.09f);
+                dialog.setHeight(ScreenDimensionsManager.getScreenHeight() / 1.9f);
                 dialog.padBottom(20);
             }
         });
@@ -174,6 +192,7 @@ public class MainMenu extends GameState {
                 if (Boolean.TRUE.equals(obj)) {
                     startStageScreen();
                 }
+                dialog.hide();
                 dialog = null;
             }
         };
@@ -186,7 +205,6 @@ public class MainMenu extends GameState {
         Label label = c.label(getLabel("newgame_confirm"));
         label.setAlignment(Align.center);
         dialogToReturn.text(label);
-
         return dialogToReturn;
     }
 
@@ -194,6 +212,11 @@ public class MainMenu extends GameState {
         gameInfoManager.resetAll();
         achievementsManager.resetAll();
         gameInfo = gameInfoManager.createGameInfo();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     void startStageScreen() {
@@ -241,6 +264,6 @@ public class MainMenu extends GameState {
     }
 
     private float valueForScaledHeight(int percent) {
-        return Utils.getValueForPercent(displayHeight, percent);
+        return Utils.getValueForPercent(ScreenDimensionsManager.getScreenHeight(), percent);
     }
 }
