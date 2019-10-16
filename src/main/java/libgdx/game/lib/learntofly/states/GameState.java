@@ -58,7 +58,7 @@ public abstract class GameState {
     }
 
     private void createBackButton() {
-        backButton = new TextButton(getLabel("back"), skin, "green");
+        backButton = c.textButton(getLabel("back"),  "green");
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

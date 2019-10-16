@@ -19,7 +19,7 @@ public class LearnToFly {
 
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        Game game = new Game(Language.en, GameMode.DESKTOP);
+        Game game = new Game(Language.de, GameMode.DESKTOP);
         cfg.width = V_WIDTH;
         cfg.height = V_HEIGHT;
 

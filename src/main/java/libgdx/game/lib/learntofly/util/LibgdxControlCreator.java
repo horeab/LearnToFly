@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
+import libgdx.game.Game;
+import libgdx.resources.FontManager;
+
 public class LibgdxControlCreator {
 
     private Skin skin;
@@ -18,6 +21,7 @@ public class LibgdxControlCreator {
 
     public TextButton textButton(String text, String styleName) {
         TextButton btn = new TextButton(text, skin, styleName);
+        btn.getStyle().font = Game.getInstance().getFontManager().getFont();
         btn.getStyle().font.getData().setScale(libgdxControlUtils.getHeightDisplayRatio());
         return btn;
     }
@@ -44,6 +48,7 @@ public class LibgdxControlCreator {
 
     public Label label(String text) {
         Label label = new Label(text, skin);
+        label.getStyle().font = Game.getInstance().getFontManager().getFont();
         label.getStyle().font.getData().setScale(libgdxControlUtils.getHeightDisplayRatio());
         return label;
     }

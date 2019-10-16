@@ -128,13 +128,6 @@ public enum Resource implements Res {
     altitude_achievement("menu/achievements/altitude_achievement.png", Texture.class),
     finish("menu/achievements/finish.png", Texture.class),
 
-    //ALPHA NUMERIC CHARACTERS/////////////////////////////////////////////////
-    green_numbers("resources/green_numbers.png", Texture.class),
-    numbers("resources/numbers.png", Texture.class),
-    alphabet_upper("resources/alphabet_upper.png", Texture.class),
-    alphabet_lower("resources/alphabet_lower.png", Texture.class),
-    ///////////////////////////////////////////////////////////////////////////
-
     //MENU STAGE///////////////////////////////////////////////////////////////
     stage_btn1("menu/stage/stage_btn1.png", Texture.class),
     stage_btn2("menu/stage/stage_btn2.png", Texture.class),

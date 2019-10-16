@@ -42,7 +42,7 @@ public class TutorialScreen extends GameState {
 				processNextScreen();
 			}
 		});
-		Label instructionsLabel = new Label(getInstructions(), skin);
+		Label instructionsLabel = c.label(getInstructions());
 		instructionsLabel.setFontScale(libgdxControlUtils.getFontScale());
 		instructionsLabel.setAlignment(Align.topLeft);
 		imageTable

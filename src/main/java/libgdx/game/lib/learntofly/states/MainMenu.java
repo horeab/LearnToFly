@@ -183,7 +183,7 @@ public class MainMenu extends GameState {
         dialogToReturn.getButtonTable().add(yesBtn).width(getDialogBtnWidth()).height(getDialogBtnHeight());
         dialogToReturn.setObject(notBtn, false);
         dialogToReturn.setObject(yesBtn, true);
-        Label label = new Label(getLabel("newgame_confirm"), skin);
+        Label label = c.label(getLabel("newgame_confirm"));
         label.setAlignment(Align.center);
         dialogToReturn.text(label);
 

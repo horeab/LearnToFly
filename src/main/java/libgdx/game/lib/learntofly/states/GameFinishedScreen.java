@@ -1,5 +1,6 @@
 package libgdx.game.lib.learntofly.states;
 
+import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.Utils;
@@ -22,11 +23,11 @@ public class GameFinishedScreen extends GameState {
 	private Table createLayout() {
 		Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
 
-		Label congratulationsLabel = new Label(getLabel("congratulations"), skin);
+		Label congratulationsLabel = c.label(getLabel("congratulations"));
 		congratulationsLabel.setFontScale(libgdxControlUtils.getFontScale());
-		Label finishedLabel = new Label(getLabel("finished_game", gameInfo.getCurrentDay()), skin);
+		Label finishedLabel = c.label(getLabel("finished_game", gameInfo.getCurrentDay()));
 		finishedLabel.setFontScale(libgdxControlUtils.getFontScale());
-		Label optionsLabel = new Label(getLabel("confirm_msg"), skin);
+		Label optionsLabel = c.label(getLabel("confirm_msg"));
 		optionsLabel.setAlignment(Align.center);
 		optionsLabel.setFontScale(libgdxControlUtils.getFontScale() / 1.3f);
 		Table labelTable = new Table(skin);
@@ -61,6 +62,7 @@ public class GameFinishedScreen extends GameState {
 
 	private TextButton createNewGameBtn() {
 		TextButton newGame = new TextButton(getLabel("start_a_new_game"), skin);
+		newGame.getStyle().font = Game.getInstance().getFontManager().getFont();
 		newGame.getLabel().setFontScale(libgdxControlUtils.getFontScale());
 		newGame.addListener(new ClickListener() {
 			@Override
@@ -73,6 +75,7 @@ public class GameFinishedScreen extends GameState {
 
 	private TextButton createContinueBtn() {
 		TextButton continueBtn = new TextButton(getLabel("continue_this_game"), skin);
+		continueBtn.getStyle().font = Game.getInstance().getFontManager().getFont();
 		continueBtn.getLabel().setFontScale(libgdxControlUtils.getFontScale());
 		continueBtn.addListener(new ClickListener() {
 			@Override

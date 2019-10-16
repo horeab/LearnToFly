@@ -29,12 +29,14 @@ public class LibgdxControlUtils {
     private float displayWidth;
     private float displayHeight;
     private PreferencesManager preferencesManager;
+    protected LibgdxControlCreator c;
 
     public LibgdxControlUtils(Skin skin, PreferencesManager preferencesManager) {
         this.skin = skin;
         displayWidth = Game.getWidth();
         displayHeight = Game.getHeight();
         this.preferencesManager = preferencesManager;
+        c = new LibgdxControlCreator(skin, this);
     }
 
     public void playSound(Sound sound) {
@@ -60,11 +62,11 @@ public class LibgdxControlUtils {
     public HeaderInfo createHeaderTable(int stage, int day, int cash, GameStateManager gameStateManager, GameInfo gameInfo) {
         Table headerTable = new Table(skin);
         headerTable.setBackground(LibgdxControlUtils.createColorTexture(Color.valueOf("ffffff"), 0.6f));
-        Label stageLabel = new Label(getStageName(stage), skin);
+        Label stageLabel = c.label(getStageName(stage));
         stageLabel.setFontScale(getFontScale());
-        Label currentDayLabel = new Label(GameState.getLabel("day", day), skin);
+        Label currentDayLabel = c.label(GameState.getLabel("day", day));
         currentDayLabel.setFontScale(getFontScale());
-        Label cashLabel = new Label(cash + "", skin);
+        Label cashLabel = c.label(cash + "");
         cashLabel.setFontScale(getFontScale());
         headerTable.add(currentDayLabel);
         headerTable.add().width(displayWidth / 4);

@@ -129,7 +129,7 @@ public class StageScreen extends GameState {
 			stageImgTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE,
 					0.8f));
 		} else {
-			Label label = new Label(LibgdxControlUtils.getStageName(stageNr), skin);
+			Label label = c.label(LibgdxControlUtils.getStageName(stageNr));
 			label.setFontScale(libgdxControlUtils.getFontScale());
 			Table labelBackgroundTable = new Table(skin);
 			labelBackgroundTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE, 0.6f));
@@ -164,10 +164,10 @@ public class StageScreen extends GameState {
 		Image achievImg = new Image(achImg);
 		float imgScale = 0.25f;
 		achievImg.setScale(imgScale);
-		Label label = new Label("  " + nrValue, skin);
+		Label label = c.label("  " + nrValue);
 		float fontScale = libgdxControlUtils.getFontScale() / 1.4f;
 		label.setFontScale(fontScale);
-		Label xlabel = new Label("x", skin);
+		Label xlabel = c.label("x");
 		xlabel.setFontScale(fontScale);
 		int padTop = 1;
 		achTable
