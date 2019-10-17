@@ -102,9 +102,10 @@ public enum Resource implements Res {
     ///////////////////////////////////////////////////////////////////////////
 
     //MENU/////////////////////////////////////////////////////////////////////
-    title_en("menu/title_en.png", Texture.class),
     title_de("menu/title_de.png", Texture.class),
+    title_en("menu/title_en.png", Texture.class),
     title_ro("menu/title_ro.png", Texture.class),
+    title_zh("menu/title_zh.png", Texture.class),
     background_all("menu/background_all.jpg", Texture.class),
     background_second("menu/background_second.png", Texture.class),
     facebook_like("menu/facebook_like.png", Texture.class),

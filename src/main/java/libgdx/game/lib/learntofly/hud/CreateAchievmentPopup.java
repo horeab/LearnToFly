@@ -11,6 +11,7 @@ import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.states.GameState;
 import libgdx.game.lib.learntofly.states.StageScreen;
 import libgdx.game.lib.learntofly.util.B2DSprites;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
@@ -82,25 +83,25 @@ public class CreateAchievmentPopup {
             this.stageJustUnlocked = null;
             currentAchievement = null;
         }
+//        this.stageJustUnlocked = 1;
+//        drawUnlockedStagePopup(sb);
     }
 
     private void drawUnlockedStagePopup(SpriteBatch sb) {
-        String text1 = GameState.getLabel("next_stage_text1");
-        String text2 = GameState.getLabel("next_stage_text2");
+        String text1 = LearnToFlyGameLabel.l_next_stage_text1.getText();
+        String text2 = LearnToFlyGameLabel.l_next_stage_text2.getText();
         if (stageJustUnlocked == StageScreen.NR_OF_STAGES + 1) {
-            text1 = GameState.getLabel("play_congratulations");
-            text2 = GameState.getLabel("play_game_finished");
+            text1 = LearnToFlyGameLabel.l_play_congratulations.getText();
+            text2 = LearnToFlyGameLabel.l_play_game_finished.getText();
         }
-        int text1Width = (int) HUD.getTextWidth(text1);
-        int text2Margin = (text1Width - (int) HUD.getTextWidth(text2)) / 2;
-        int popupWidth = (int) HUD.getTextWidth(text1);
+        int popupWidth = (int) HUD.getTextWidth(text1) + Math.round(ScreenDimensionsManager.getScreenWidthValue(5));
         achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("FF9900")));
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
         int height = (int) Utils.getValueForDisplayHeightPercent(80);
         float popupX = Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 3);
         sb.draw(achievmentPopupTexture, popupX, height);
         sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(5);
+        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(2);
         HUD.drawFont(sb,
                 text1,
                 popupX + extraMargin,
@@ -110,7 +111,7 @@ public class CreateAchievmentPopup {
                 textAlphaValue);
         HUD.drawFont(sb,
                 text2,
-                popupX + extraMargin + text2Margin,
+                popupX + extraMargin,
                 height + Utils.getValueForDisplayHeightPercent(2),
                 FontColor.BLACK,
                 Game.STANDARD_FONT_SIZE,
@@ -150,7 +151,7 @@ public class CreateAchievmentPopup {
     }
 
     private void drawAchievementText(SpriteBatch sb, float y, float labelX, String text, int cashReward) {
-        String reward = GameState.getLabel("reward", cashReward);
+        String reward = LearnToFlyGameLabel.l_reward.getText(cashReward);
         float extraMargin = ScreenDimensionsManager.getScreenWidthValue(1);
         int standardFontSize = Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
         HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, standardFontSize, textAlphaValue);
@@ -161,7 +162,7 @@ public class CreateAchievmentPopup {
                 FontColor.BLACK,
                 standardFontSize,
                 textAlphaValue);
-        drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + GameState.getLabel("reward", "0").length() * ScreenDimensionsManager.getScreenWidthValue(0.7f), cashReward);
+        drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + LearnToFlyGameLabel.l_reward.getText("0").length() * ScreenDimensionsManager.getScreenWidthValue(0.7f), cashReward);
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {

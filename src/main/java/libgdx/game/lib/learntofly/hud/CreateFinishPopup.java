@@ -15,6 +15,7 @@ import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.states.GameState;
 import libgdx.game.lib.learntofly.storemanagers.GameInfoManager;
 import libgdx.game.lib.learntofly.util.B2DSprites;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.utils.ScreenDimensionsManager;
@@ -151,13 +152,15 @@ public class CreateFinishPopup {
             speedShowEndInfo = false;
         }
         drawAchievementIncrementBar(sb, popupY + getHeightPercent(startPercent), distanceIncrementCounter, distanceIncrementCounterDisplay, distanceShowEndInfo, distanceCurrent > distanceMax,
-                playerAttrs.getDistanceCash(), GameState.getLabel("distance"));
+                playerAttrs.getDistanceCash(), LearnToFlyGameLabel.l_distance.getText());
         drawAchievementIncrementBar(sb, popupY + getHeightPercent(startPercent - diffPercent), altitudeIncrementCounter, altitudeIncrementCounterDisplay, altitudeShowEndInfo,
-                altitudeCurrent > altitudeMax, playerAttrs.getAltitudeCash(), GameState.getLabel("altitude"));
+                altitudeCurrent > altitudeMax, playerAttrs.getAltitudeCash(), LearnToFlyGameLabel.l_altitude.getText())
+        ;
         drawAchievementIncrementBar(sb, popupY + getHeightPercent(startPercent - diffPercent * 2), durationIncrementCounter, durationIncrementCounterDisplay, durationShowEndInfo,
-                durationCurrent > durationMax, playerAttrs.getDurationCash(), GameState.getLabel("duration"));
+                durationCurrent > durationMax, playerAttrs.getDurationCash(), LearnToFlyGameLabel.l_duration.getText())
+        ;
         drawAchievementIncrementBar(sb, popupY + getHeightPercent(startPercent - diffPercent * 3), speedIncrementCounter, speedIncrementCounterDisplay, speedShowEndInfo,
-                speedCurrent > speedMax, playerAttrs.getSpeedCash(), GameState.getLabel("speed"));
+                speedCurrent > speedMax, playerAttrs.getSpeedCash(), LearnToFlyGameLabel.l_speed.getText());
 
         if (areAllInfosShown()) {
             int yOffsetForTotal = 0;
@@ -226,17 +229,17 @@ public class CreateFinishPopup {
     }
 
     private void drawCurrentDay(SpriteBatch sb, float y, float x) {
-        drawFont(sb, GameState.getLabel("day", gameInfoManager.getCurrentDay()), x, y);
+        drawFont(sb, LearnToFlyGameLabel.l_day.getText(gameInfoManager.getCurrentDay()), x, y);
     }
 
     private void drawAchievementsCash(SpriteBatch sb, float y, float labelX, float cashX) {
-        drawFont(sb, GameState.getLabel("achievements_earnings"), labelX, y);
+        drawFont(sb, LearnToFlyGameLabel.l_achievements_earnings.getText(), labelX, y);
         drawFont(sb, playerAttrs.getGainedAchievementsReward() + "", cashX, y);
         drawCoins(sb, y, cashX, playerAttrs.getGainedAchievementsReward());
     }
 
     private void drawTotal(SpriteBatch sb, float y, float labelX, float cashX, int total) {
-        drawFont(sb, GameState.getLabel("total_earnings"), labelX, y);
+        drawFont(sb, LearnToFlyGameLabel.l_total_earnings.getText(), labelX, y);
         drawFont(sb, total + "", cashX, y);
         drawCoins(sb, y, cashX, total);
     }

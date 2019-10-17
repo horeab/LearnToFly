@@ -12,6 +12,7 @@ import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
 import libgdx.game.lib.learntofly.to.menu.IncrementShopInfo;
 import libgdx.game.lib.learntofly.to.menu.UpgradeMenuScrollShopInfo;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
@@ -98,7 +99,7 @@ public class UpgradeMenu extends GameState {
     }
 
     private void addButtons() {
-        TextButton playButton = new TextButton(getLabel("play"), skin, "green");
+        TextButton playButton = new TextButton(LearnToFlyGameLabel.l_play.getText(), skin, "green");
         playButton.getStyle().font = Game.getInstance().getFontManager().getFont();
         playButton.getLabel().setFontScale(libgdxControlUtils.getFontScale());
         playButton.addListener(new ClickListener() {
@@ -238,7 +239,7 @@ public class UpgradeMenu extends GameState {
 
     private Table createIncrementShop(int shopType) {
         Table allContainer = new Table(skin);
-        TextButton buyButton = new TextButton(getLabel("buy"), skin);
+        TextButton buyButton = new TextButton(LearnToFlyGameLabel.l_buy.getText(), skin);
         buyButton.getStyle().font = Game.getInstance().getFontManager().getFont();
         buyButton.getLabel().setFontScale(FontManager.getSmallFontDim());
         buyButtonClick(buyButton, shopType);
@@ -415,7 +416,7 @@ public class UpgradeMenu extends GameState {
 
     private void refreshNextLevelPriceLabel(Label nextLevel, Image coin, int shopId) {
         int nextLevelPrice = getNextLevelPrice(shopId);
-        nextLevel.setText(getLabel("next_level") + nextLevelPrice);
+        nextLevel.setText(LearnToFlyGameLabel.l_next_level.getText() + nextLevelPrice);
         if (gameInfo.getCash() < nextLevelPrice) {
             nextLevel.getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.RED);
         }

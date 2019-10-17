@@ -2,6 +2,7 @@ package libgdx.game.lib.learntofly.levels;
 
 
 import libgdx.game.lib.learntofly.states.GameState;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 
 public enum RampLevel {
 
@@ -74,7 +75,7 @@ public enum RampLevel {
 	}
 
 	public static String getShopLabel() {
-		return GameState.getLabel("ramp");
+		return LearnToFlyGameLabel.l_ramp.getText();
 	}
 
 }

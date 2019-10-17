@@ -65,7 +65,7 @@ public class LibgdxControlUtils {
         headerTable.setBackground(LibgdxControlUtils.createColorTexture(Color.valueOf("ffffff"), 0.6f));
         Label stageLabel = c.label(getStageName(stage));
         stageLabel.setFontScale(getFontScale());
-        Label currentDayLabel = c.label(GameState.getLabel("day", day));
+        Label currentDayLabel = c.label(LearnToFlyGameLabel.l_day.getText(day));
         currentDayLabel.setFontScale(getFontScale());
         Label cashLabel = c.label(cash + "");
         cashLabel.setFontScale(getFontScale());
@@ -113,7 +113,7 @@ public class LibgdxControlUtils {
     }
 
     public static void refreshHeaderInfo(HeaderInfo headerInfo, int day, int cash) {
-        headerInfo.getCurrentDay().setText(GameState.getLabel("day", day));
+        headerInfo.getCurrentDay().setText(LearnToFlyGameLabel.l_day.getText(day));
         headerInfo.getCash().setText(cash + "");
     }
 
@@ -125,7 +125,7 @@ public class LibgdxControlUtils {
     }
 
     public static String getStageName(int stageNr) {
-        return GameState.getLabel("stage" + stageNr);
+        return LearnToFlyGameLabel.valueOf("l_stage" + stageNr).getText();
     }
 
     public float getHeightDisplayRatio() {

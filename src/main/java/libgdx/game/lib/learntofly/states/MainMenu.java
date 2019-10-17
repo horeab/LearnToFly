@@ -16,6 +16,7 @@ import libgdx.controls.popup.MyPopup;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.dimen.MainDimen;
@@ -152,15 +153,15 @@ public class MainMenu extends GameState {
     }
 
     private TextButton createNewGameBtn() {
-        TextButton newGame = c.textButton(getLabel("new_game"), "green");
+        TextButton newGame = c.textButton(LearnToFlyGameLabel.l_new_game.getText(), "green");
         newGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MyPopup myPopup = new MyPopup(getAbstractScreen()) {
                     @Override
                     protected void addButtons() {
-                        TextButton notBtn = c.textButton(MainMenu.getLabel("no"), "default");
-                        TextButton yesBtn = c.textButton(MainMenu.getLabel("yes"), "default");
+                        TextButton notBtn = c.textButton(LearnToFlyGameLabel.l_no.getText(), "default");
+                        TextButton yesBtn = c.textButton(LearnToFlyGameLabel.l_yes.getText(), "default");
                         yesBtn.addListener(new ClickListener() {
                             @Override
                             public void clicked(InputEvent event, float x, float y) {
@@ -180,7 +181,7 @@ public class MainMenu extends GameState {
 
                     @Override
                     protected String getLabelText() {
-                        return MainMenu.getLabel("newgame_confirm");
+                        return LearnToFlyGameLabel.l_newgame_confirm.getText();
                     }
                 };
                 myPopup.addToPopupManager();
@@ -190,7 +191,7 @@ public class MainMenu extends GameState {
     }
 
     private TextButton createContinueBtn() {
-        String playBtnText = gameInfo.gameExistsInMemory() ? getLabel("continue") : getLabel("play");
+        String playBtnText = gameInfo.gameExistsInMemory() ? LearnToFlyGameLabel.l_continue.getText() : LearnToFlyGameLabel.l_play.getText();
         TextButton continueBtn = c.textButton(playBtnText, "green");
         continueBtn.addListener(new ClickListener() {
             @Override

@@ -21,7 +21,7 @@ public class LearnToFly {
 
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        Game game = new Game(Language.de, GameMode.DESKTOP);
+        Game game = new Game(Language.zh, GameMode.DESKTOP);
         Pair<Integer, Integer> V = s;
         cfg.height = V.getLeft();
         cfg.width = V.getRight();

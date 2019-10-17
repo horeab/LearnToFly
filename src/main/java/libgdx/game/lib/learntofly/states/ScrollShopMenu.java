@@ -9,6 +9,7 @@ import libgdx.game.lib.learntofly.levels.SledLevel;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
 import libgdx.game.lib.learntofly.to.menu.ScrollShopInfo;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
@@ -139,7 +140,7 @@ public class ScrollShopMenu extends GameState {
                 SpriteDrawable drawable = Utils.getDrawable(Resource.checked);
                 btnTable.setBackground(drawable);
             } else {
-                Label label = c.label(getLabel("buy"));
+                Label label = c.label(LearnToFlyGameLabel.l_buy.getText());
                 label.setFontScale(libgdxControlUtils.getFontScale());
                 btnTable.add(label);
                 if (shopLevel.getLevel() > getBoughtLevel() + 1) {

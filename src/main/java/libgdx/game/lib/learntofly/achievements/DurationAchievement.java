@@ -2,6 +2,7 @@ package libgdx.game.lib.learntofly.achievements;
 
 
 import libgdx.game.lib.learntofly.states.GameState;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 
 public enum DurationAchievement implements Achievement {
 
@@ -35,7 +36,7 @@ public enum DurationAchievement implements Achievement {
 
 	@Override
 	public String getAchievementLabel(int value) {
-		return GameState.getLabel("duration_achievement", value);
+		return LearnToFlyGameLabel.l_duration_achievement.getText( value);
 	}
 
 	@Override

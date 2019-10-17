@@ -12,6 +12,7 @@ import libgdx.game.lib.learntofly.achievements.SpeedAchievement;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.dimen.MainDimen;
@@ -108,7 +109,7 @@ public class AchievementsScreen extends GameState {
         Label achievementLabel = c.label(achievement.getAchievementLabel(achievement.getValue()));
         achievementLabel.setAlignment(Align.center);
         achievementLabel.setFontScale(libgdxControlUtils.getFontScale());
-        Label rewardLabel = c.label(getLabel("reward", achievement.getReward()));
+        Label rewardLabel = c.label(LearnToFlyGameLabel.l_reward.getText(achievement.getReward()));
         Table achievementLabelTable = new Table(skin);
         achievementLabelTable.add(achievementLabel).width(getAchievementInfoWidth()).padTop(getAchievementsPadding() / 2);
         Table rewardTable = new Table(skin);

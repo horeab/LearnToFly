@@ -1,21 +1,22 @@
 package libgdx.game.lib.learntofly.levels;
 
 import libgdx.game.lib.learntofly.states.GameState;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.Utils;
 
 public enum SledLevel implements ShopLevel {
 
-	NO_LEVEL(0, GameState.getLabel("sled"), 20, 0, 0),
+	NO_LEVEL(0, LearnToFlyGameLabel.l_sled.getText(), 20, 0, 0),
 
-	LEVEL1(1, GameState.getLabel("sled1"), 80, 20, 125),
-	LEVEL2(2, GameState.getLabel("sled2"), 140, 25, 180),
+	LEVEL1(1, LearnToFlyGameLabel.l_sled1.getText(), 80, 20, 125),
+	LEVEL2(2, LearnToFlyGameLabel.l_sled2.getText(), 140, 25, 180),
 
-	LEVEL3(3, GameState.getLabel("sled3"), 230, 25, 850),
-	LEVEL4(4, GameState.getLabel("sled4"), 340, 70, 2500),
+	LEVEL3(3, LearnToFlyGameLabel.l_sled3.getText(), 230, 25, 850),
+	LEVEL4(4, LearnToFlyGameLabel.l_sled4.getText(), 340, 70, 2500),
 
-	LEVEL5(5, GameState.getLabel("sled5"), 420, 100, 5000),
+	LEVEL5(5, LearnToFlyGameLabel.l_sled5.getText(), 420, 100, 5000),
 
-	LEVEL6(6, GameState.getLabel("sled6"), 500, 150, 10000);
+	LEVEL6(6, LearnToFlyGameLabel.l_sled6.getText(), 500, 150, 10000);
 
 	public static int SHOP_ID = 3;
 
@@ -79,8 +80,8 @@ public enum SledLevel implements ShopLevel {
 	@Override
 	public String[] getAttrName() {
 		return new String[] {
-				GameState.getLabel("sled_attr1"),
-				GameState.getLabel("sled_attr2") };
+				LearnToFlyGameLabel.l_sled_attr1.getText(),
+				LearnToFlyGameLabel.l_sled_attr2.getText() };
 	}
 
 	@Override

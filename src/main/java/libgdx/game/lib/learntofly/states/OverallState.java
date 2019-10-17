@@ -1,18 +1,15 @@
 package libgdx.game.lib.learntofly.states;
 
 import libgdx.constants.Language;
-import libgdx.game.Game;
 import libgdx.game.lib.learntofly.storemanagers.AchievementsManager;
 import libgdx.game.lib.learntofly.storemanagers.GameInfoManager;
 import libgdx.game.lib.learntofly.storemanagers.PreferencesManager;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
-import libgdx.resources.FontManager;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -34,7 +31,7 @@ public class OverallState {
     }
 
     private void setupStuff(Language language) {
-        labelsResource = I18NBundle.createBundle(Gdx.files.internal("learntofly/resources/labels_" + language.toString()));
+        labelsResource = I18NBundle.createBundle(Gdx.files.internal("learntofly/labels/labels_" + language.toString()));
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         skin = new Skin(Gdx.files.internal("learntofly/resources/skin.json"), new TextureAtlas(Gdx.files.internal("learntofly/buttons/btn_texture.pack")));
         gameInfoManager = new GameInfoManager();

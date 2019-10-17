@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.to.GameInfo;
+import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.utils.ScreenDimensionsManager;
@@ -105,13 +106,12 @@ public class TutorialScreen extends GameState {
 
     private String getInstructions() {
         String instructions = null;
-        String suffix = Game.isDesktopGameMode() ? "desktop" : "mobile";
         switch (tutorialScreenType) {
             case START_GAME:
-                instructions = getLabel("start_tutorial_" + suffix);
+                instructions = LearnToFlyGameLabel.l_start_tutorial_mobile.getText();
                 break;
             case ROCKET:
-                instructions = getLabel("rocket_tutorial_" + suffix);
+                instructions = LearnToFlyGameLabel.l_rocket_tutorial_mobile.getText();
                 break;
             default:
                 break;
@@ -126,7 +126,7 @@ public class TutorialScreen extends GameState {
                 padLeft = ScreenDimensionsManager.getScreenWidthValue(10);
                 break;
             case ROCKET:
-                padLeft =ScreenDimensionsManager.getScreenWidthValue(10);
+                padLeft = ScreenDimensionsManager.getScreenWidthValue(10);
                 break;
             default:
                 break;
