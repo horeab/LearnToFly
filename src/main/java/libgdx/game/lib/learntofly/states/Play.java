@@ -177,7 +177,7 @@ public class Play extends GameState {
     public void handleInput() {
         if ((BBInput.isWholeScreenPressed() || Gdx.input.isKeyPressed(Keys.ESCAPE))
                 && gameRunState == GameRunState.GAME_FINISHED
-                && !isWholeScreenPressed) {
+                && !isWholeScreenPressed && !screenDisposed) {
             isWholeScreenPressed = true;
             if (hud.getCreateFinishPopup().areAllInfosShown()) {
                 if (gameInfoManager.displayGameFinishedScreen()) {
@@ -194,37 +194,39 @@ public class Play extends GameState {
             if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
                 onBackKeyPress();
             }
-            if (BBInput.isGoUpPressed()) {
-                player.pushUp();
-            }
-            if (BBInput.isGoDownPressed()) {
-                player.pushDown();
-            }
-            if (BBInput.isRocketPressed()
-                    && availableFuel > 0
-                    && !player.isPlayerOnGround()
-                    && player.hasLeftRamp()
-                    && rocketCreator.hasAccesory()) {
-                player.thrust(rocketLevelEnum.getThrustLevel(), rocketLevelEnum.getTopSpeedLevel());
-                rocketCreator.setAnimationToPlay("rocketFire", "rocketHorizontal");
-                availableFuel = availableFuel - fuelLevelEnum.getFuelLevel();
-                if (!rocketSoundStarted) {
-                    rocketSoundStarted = true;
-                    libgdxControlUtils.loopSound(rocketSound);
+            if (!screenDisposed) {
+                if (BBInput.isGoUpPressed()) {
+                    player.pushUp();
                 }
-            } else {
+                if (BBInput.isGoDownPressed()) {
+                    player.pushDown();
+                }
+                if (BBInput.isRocketPressed()
+                        && availableFuel > 0
+                        && !player.isPlayerOnGround()
+                        && player.hasLeftRamp()
+                        && rocketCreator.hasAccesory()) {
+                    player.thrust(rocketLevelEnum.getThrustLevel(), rocketLevelEnum.getTopSpeedLevel());
+                    rocketCreator.setAnimationToPlay("rocketFire", "rocketHorizontal");
+                    availableFuel = availableFuel - fuelLevelEnum.getFuelLevel();
+                    if (!rocketSoundStarted) {
+                        rocketSoundStarted = true;
+                        libgdxControlUtils.loopSound(rocketSound);
+                    }
+                } else {
+                    rocketSound.stop();
+                    if (player.hasLeftRamp() && rocketCreator.hasAccesory()) {
+                        rocketCreator.setAnimationToPlay("rocketHorizontal");
+                    }
+                }
+                if (availableFuel <= 0) {
+                    rocketCreator.removeAccesory();
+                }
+            }
+            if (!BBInput.isRocketPressed()) {
                 rocketSound.stop();
-                if (player.hasLeftRamp() && rocketCreator.hasAccesory()) {
-                    rocketCreator.setAnimationToPlay("rocketHorizontal");
-                }
+                rocketSoundStarted = false;
             }
-            if (availableFuel <= 0) {
-                rocketCreator.removeAccesory();
-            }
-        }
-        if (!BBInput.isRocketPressed()) {
-            rocketSound.stop();
-            rocketSoundStarted = false;
         }
     }
 
@@ -239,12 +241,17 @@ public class Play extends GameState {
             if (!screenDisposed) {
                 world.step(dt, 8, 3);
             }
-            player.update(dt);
-
-            updatePlayerAttrs();
+            if (!screenDisposed) {
+                player.update(dt);
+            }
+            if (!screenDisposed) {
+                updatePlayerAttrs();
+            }
             loadBackgrounds();
             updateGameRunState();
-            updateMaxAttrs();
+            if (!screenDisposed) {
+                updateMaxAttrs();
+            }
             if (gameRunState == GameRunState.RUN && player.hasLeftRamp()) {
                 secondsPassed = secondsPassed + Gdx.graphics.getDeltaTime();
             }
@@ -457,7 +464,7 @@ public class Play extends GameState {
         rocketCreator.dispose();
         sledCreator.dispose();
         inputProcessor.dispose();
-        world.dispose();
+//        world.dispose();
         screenDisposed = true;
         rocketSound.stop();
     }

@@ -7,6 +7,7 @@ import libgdx.game.lib.learntofly.states.StageScreen;
 import libgdx.game.lib.learntofly.storemanagers.PreferencesManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
+import libgdx.utils.ScreenDimensionsManager;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -52,7 +53,7 @@ public class LibgdxControlUtils {
     }
 
     public float getHeaderHeight() {
-        return Utils.getValueForDisplayHeightPercent(10);
+        return ScreenDimensionsManager.getScreenHeightValue(10);
     }
 
     public float getSidePadding() {

@@ -14,6 +14,7 @@ import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.to.menu.HeaderInfo;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.resources.dimen.MainDimen;
 import libgdx.utils.ScreenDimensionsManager;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -113,7 +114,9 @@ public class AchievementsScreen extends GameState {
         Table rewardTable = new Table(skin);
         Image coinImg = c.image("coin");
         rewardTable.add(rewardLabel);
-        rewardTable.add(coinImg).padTop(-getAchievementsPadding());
+        float dimen = MainDimen.horizontal_general_margin.getDimen();
+        float imgDimen = dimen * 5;
+        rewardTable.add(coinImg).width(imgDimen).height(imgDimen).padTop(-dimen * 2.7f);
 
         infoContainer.add(achievementLabelTable).row();
         infoContainer.add(rewardTable);
@@ -153,11 +156,11 @@ public class AchievementsScreen extends GameState {
     }
 
     private float getAchievementHeight() {
-        return Utils.getValueForDisplayHeightPercent(25);
+        return ScreenDimensionsManager.getScreenHeightValue(25);
     }
 
     private float getAchievementWidth() {
-        return Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 70);
+        return ScreenDimensionsManager.getScreenWidthValue(70);
     }
 
     private float getAchievementInfoWidth() {

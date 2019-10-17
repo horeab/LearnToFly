@@ -18,11 +18,11 @@ import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.resources.dimen.MainDimen;
 import libgdx.utils.ScreenDimensionsManager;
+import libgdx.utils.model.FontConfig;
 
 public class MainMenu extends GameState {
-
-    Dialog dialog;
 
     public MainMenu(GameStateManager gameStateManager, GameInfo gameInfo) {
         super(gameStateManager, gameInfo);
@@ -87,8 +87,8 @@ public class MainMenu extends GameState {
                 .padTop(valueForScaledHeight(soundTableTopPad))
                 .width(ScreenDimensionsManager.getScreenWidth()).row();
         controlsTable.add(titleTable)
-                .height(titleDr.getSprite().getHeight() / 2f)
-                .width(titleDr.getSprite().getWidth() / 2f)
+                .height(titleDr.getSprite().getHeight())
+                .width(titleDr.getSprite().getWidth())
                 .padTop(valueForScaledHeight(titleTableTopPad))
                 .row();
         controlsTable.add(buttonsTable)
@@ -148,11 +148,7 @@ public class MainMenu extends GameState {
 
     @Override
     public void onBackKeyPress() {
-        if (((MainMenu) this).isDialogIsShown()) {
-            ((MainMenu) this).closeShownDialog();
-        } else {
-            Gdx.app.exit();
-        }
+        Gdx.app.exit();
     }
 
     private TextButton createNewGameBtn() {
@@ -160,10 +156,34 @@ public class MainMenu extends GameState {
         newGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialog = startNewGameDialog().show(getStage());
-                dialog.setWidth(ScreenDimensionsManager.getScreenWidth() / 1.09f);
-                dialog.setHeight(ScreenDimensionsManager.getScreenHeight() / 1.9f);
-                dialog.padBottom(20);
+                MyPopup myPopup = new MyPopup(getAbstractScreen()) {
+                    @Override
+                    protected void addButtons() {
+                        TextButton notBtn = c.textButton(MainMenu.getLabel("no"), "default");
+                        TextButton yesBtn = c.textButton(MainMenu.getLabel("yes"), "default");
+                        yesBtn.addListener(new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                startStageScreen();
+                                hide();
+                            }
+                        });
+                        notBtn.addListener(new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                hide();
+                            }
+                        });
+                        getButtonTable().add(notBtn).padBottom(MainDimen.vertical_general_margin.getDimen()).width(notBtn.getWidth()).height(notBtn.getHeight() * 1.05f).row();
+                        getButtonTable().add(yesBtn).padBottom(MainDimen.vertical_general_margin.getDimen()).width(yesBtn.getWidth()).height(yesBtn.getHeight() * 1.05f).row();
+                    }
+
+                    @Override
+                    protected String getLabelText() {
+                        return MainMenu.getLabel("newgame_confirm");
+                    }
+                };
+                myPopup.addToPopupManager();
             }
         });
         return newGame;
@@ -185,29 +205,6 @@ public class MainMenu extends GameState {
         return continueBtn;
     }
 
-    Dialog startNewGameDialog() {
-        Dialog dialogToReturn = new Dialog("", skin, "dialog") {
-            @Override
-            protected void result(final Object obj) {
-                if (Boolean.TRUE.equals(obj)) {
-                    startStageScreen();
-                }
-                dialog.hide();
-                dialog = null;
-            }
-        };
-        TextButton notBtn = c.textButton(getLabel("no"), "default");
-        TextButton yesBtn = c.textButton(getLabel("yes"), "default");
-        dialogToReturn.getButtonTable().add(notBtn).width(getDialogBtnWidth()).height(getDialogBtnHeight());
-        dialogToReturn.getButtonTable().add(yesBtn).width(getDialogBtnWidth()).height(getDialogBtnHeight());
-        dialogToReturn.setObject(notBtn, false);
-        dialogToReturn.setObject(yesBtn, true);
-        Label label = c.label(getLabel("newgame_confirm"));
-        label.setAlignment(Align.center);
-        dialogToReturn.text(label);
-        return dialogToReturn;
-    }
-
     void initNewGame() {
         gameInfoManager.resetAll();
         achievementsManager.resetAll();
@@ -222,17 +219,6 @@ public class MainMenu extends GameState {
     void startStageScreen() {
         initNewGame();
         gameStateManager.setStageState(gameInfo, StageScreen.StageScreenType.START_GAME);
-    }
-
-    public boolean isDialogIsShown() {
-        return dialog != null;
-    }
-
-    public void closeShownDialog() {
-        if (dialog != null) {
-            dialog.hide();
-            dialog = null;
-        }
     }
 
     private float getExtraBtnWidth() {

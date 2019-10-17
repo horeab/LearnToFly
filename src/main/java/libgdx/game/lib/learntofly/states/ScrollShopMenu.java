@@ -85,7 +85,7 @@ public class ScrollShopMenu extends GameState {
     }
 
     private float getShopPadding() {
-        return Utils.getValueForDisplayHeightPercent(5);
+        return ScreenDimensionsManager.getScreenHeightValue(5);
     }
 
     private Table createShop(ShopLevel shopLevel) {
@@ -277,8 +277,8 @@ public class ScrollShopMenu extends GameState {
         setShopImg(shopLevel, imgContainerImgImgTable);
         Sprite sprite = Utils.getDrawable(Resource.getMenuShopResourceForScrollShop(shopLevel.getShopId(), shopLevel.getLevel())).getSprite();
         imgContainerImgTable.add(imgContainerImgImgTable)
-                .width(Utils.getValueForPercent(sprite.getWidth(), 45))
-                .height(Utils.getValueForPercent(sprite.getHeight(), 45))
+                .width(Utils.getValueForPercent(sprite.getWidth(), 85))
+                .height(Utils.getValueForPercent(sprite.getHeight(), 85))
                 .padTop(10);
         imgContainerImgTable.row();
 
@@ -296,7 +296,7 @@ public class ScrollShopMenu extends GameState {
         imgContainerImgTable
                 .add(imgContainerImgPriceTable)
                 .padTop(10)
-                .padLeft(Utils.getValueForDisplayHeightPercent(10))
+                .padLeft(ScreenDimensionsManager.getScreenHeightValue(10))
                 .height(getImgContainerLabelTableHeight())
                 .width(getImgContainerWidth());
         imgContainer
@@ -320,7 +320,7 @@ public class ScrollShopMenu extends GameState {
     }
 
     private float getShopHeight() {
-        return Utils.getValueForDisplayHeightPercent(45);
+        return ScreenDimensionsManager.getScreenHeightValue(45);
     }
 
     private float getShopWidth() {
@@ -348,7 +348,7 @@ public class ScrollShopMenu extends GameState {
     }
 
     private float getButtonSide() {
-        return Utils.getValueForDisplayHeightPercent(25);
+        return ScreenDimensionsManager.getScreenHeightValue(25);
     }
 
     @Override

@@ -16,6 +16,7 @@ import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.FontManager;
+import libgdx.resources.dimen.MainDimen;
 import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 
@@ -116,8 +117,8 @@ public class UpgradeMenu extends GameState {
                 gameStateManager.setAchievementsState(gameInfo);
             }
         });
-        Sprite sprite = drawable.getSprite();
-        achievementButton.add(achievementButtonTable).width(Utils.getValueForPercent(sprite.getWidth(), 60)).height(Utils.getValueForPercent(sprite.getHeight(), 60));
+        float achImgDimen = MainDimen.horizontal_general_margin.getDimen() * 3;
+        achievementButton.add(achievementButtonTable).width(achImgDimen).height(achImgDimen);
         buttonsTable.add(playButton).width(getButtonSide()).height(getButtonSide()).padBottom(getSidePadding());
         buttonsTable.row();
         buttonsTable.add(achievementButton).width(getButtonSide()).height(getButtonSide()).padBottom(getSidePadding());
@@ -137,7 +138,7 @@ public class UpgradeMenu extends GameState {
 
     private void addIncrementShop(int shopType) {
         shopsTable.add(createIncrementShopLabel(shopType))
-                .height(Utils.getValueForDisplayHeightPercent(10))
+                .height(ScreenDimensionsManager.getScreenHeightValue(10))
                 .width(getIncrementShopWidth());
         shopsTable.row();
 
@@ -186,7 +187,7 @@ public class UpgradeMenu extends GameState {
                 .width(getShopWidth());
         imgContainer.row();
         Sprite sprite = Utils.getDrawable(getResourceForShop(finalShopLevel)).getSprite();
-        float scalePercent = 45;
+        float scalePercent = 65;
         imgContainer.add(imgContainerImgTable).width(Utils.getValueForPercent(sprite.getWidth(), scalePercent)).height(Utils.getValueForPercent(sprite.getHeight(), scalePercent));
 
         ImageButton shop = new ImageButton(skin);
@@ -360,8 +361,8 @@ public class UpgradeMenu extends GameState {
     }
 
     private void disableButton(TextButton btn) {
+        btn.getStyle().fontColor = Color.GRAY;
         btn.setTouchable(Touchable.disabled);
-        btn.getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.GRAY);
     }
 
     private boolean shopIsMaxedOut(int shopId) {
@@ -373,7 +374,6 @@ public class UpgradeMenu extends GameState {
         Table labelTable = new Table(skin);
         labelTable.setBackground(LibgdxControlUtils.createColorTexture(Color.valueOf("ffffff"), 0.3f));
         Label shopNameLabel = c.label(getShopLabel(shopId));
-        int coinHeight = 37;
         shopNameLabel.setFontScale(libgdxControlUtils.getFontScale());
         Label nextLevelPriceLabel = c.label("");
         nextLevelPriceLabel.setAlignment(Align.right);
@@ -392,11 +392,11 @@ public class UpgradeMenu extends GameState {
                 .width(labelWidth - Utils.getValueForRatio(40));
         Image coinImg = new Image(skin, "coin");
         coinImg.setAlign(Align.bottomRight);
-        coinImg.setScale(0.52f);
+        float coinDimen = MainDimen.horizontal_general_margin.getDimen() * 2;
         labelTable.add(coinImg)
-                .height(coinHeight)
-                .width(coinHeight)
-                .padTop(-Utils.getValueForDisplayHeightPercent(7));
+                .height(coinDimen)
+                .width(coinDimen)
+                .padTop(-Utils.getValueForDisplayHeightPercent(1));
         labelTable.add().width(buyBtnWidth);
 
         if (shopId == RampLevel.SHOP_ID) {
@@ -426,7 +426,7 @@ public class UpgradeMenu extends GameState {
     }
 
     private float getButtonSide() {
-        return Utils.getValueForDisplayHeightPercent(25);
+        return ScreenDimensionsManager.getScreenHeightValue(25);
     }
 
     private float getContentTableHeight() {

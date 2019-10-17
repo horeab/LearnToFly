@@ -22,9 +22,6 @@ public class CreateAchievmentPopup {
     private static final int ACIEVEMENT_TEXTURE_SIDE_SIZE = 32;
     private static final int POPUP_TIMEOUT_SECONDS = 2;
 
-    private float displayHeight;
-    private float displayWidth;
-
     private Texture achievmentPopupTexture;
     private TextureRegion coinTexture;
     private TextureRegion speedAchTexture;
@@ -40,8 +37,6 @@ public class CreateAchievmentPopup {
     private LibgdxControlUtils libgdxControlUtils;
 
     public CreateAchievmentPopup(LibgdxControlUtils libgdxControlUtils) {
-        this.displayWidth = Game.getWidth();
-        this.displayHeight = Game.getHeight();
         this.libgdxControlUtils = libgdxControlUtils;
         coinTexture = new TextureRegion(Utils.getTextureWithFilter(Resource.coin));
         speedAchTexture = new TextureRegion(Utils.getTextureWithFilter(Resource.speed_achievement));
@@ -70,16 +65,16 @@ public class CreateAchievmentPopup {
             TextureRegion achievementImage = getAchievementTexture(currentAchievement.getAchievementId());
             String text = currentAchievement.getAchievementLabel(currentAchievement.getValue());
             int popupWidth = (int) HUD.getTextWidth(text) + ACIEVEMENT_TEXTURE_SIDE_SIZE;
-            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("339933")));
+            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(Math.round(popupWidth / 1.1f), getPopupHeight(), 12, Color.valueOf("339933")));
             float alphaValue = popupAlphaValue;
             if (playerIsCoveredByPopup(displayAltitude)) {
                 alphaValue = 0.3f;
             }
             sb.setColor(1.0f, 1.0f, 1.0f, alphaValue);
-            sb.draw(achievmentPopupTexture, popupX(displayAltitude), HUD.getFuelbarYPos(displayHeight));
+            sb.draw(achievmentPopupTexture, popupX(displayAltitude), HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()));
             drawAchievementImage(sb, displayAltitude, achievementImage);
             sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-            drawAchievementText(sb, HUD.getFuelbarYPos(displayHeight), popupX(displayAltitude) + ACIEVEMENT_TEXTURE_SIDE_SIZE, text, currentAchievement.getReward());
+            drawAchievementText(sb, HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()), popupX(displayAltitude) + ACIEVEMENT_TEXTURE_SIDE_SIZE, text, currentAchievement.getReward());
             if (this.stageJustUnlocked != null) {
                 drawUnlockedStagePopup(sb);
             }
@@ -102,7 +97,7 @@ public class CreateAchievmentPopup {
         achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("FF9900")));
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
         int height = (int) Utils.getValueForDisplayHeightPercent(80);
-        float popupX = Utils.getValueForPercent(displayWidth, 3);
+        float popupX = Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 3);
         sb.draw(achievmentPopupTexture, popupX, height);
         sb.setColor(1.0f, 1.0f, 1.0f, 1f);
         float extraMargin = ScreenDimensionsManager.getScreenWidthValue(5);
@@ -123,14 +118,14 @@ public class CreateAchievmentPopup {
     }
 
     private int getPopupHeight() {
-        return (int) (displayHeight / 6f);
+        return (int) (ScreenDimensionsManager.getScreenHeightValue(8));
     }
 
     private void drawAchievementImage(SpriteBatch sb, int displayAltitude, TextureRegion achievementTexture) {
         float baseScale = 1f * libgdxControlUtils.getHeightDisplayRatio();
         sb.draw(achievementTexture,
                 popupX(displayAltitude) + ACIEVEMENT_TEXTURE_SIDE_SIZE / 10,
-                HUD.getFuelbarYPos(displayHeight) + getPopupHeight() / 10,
+                HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()) + getPopupHeight() / 10,
                 0,// orgin
                 0,// orgin
                 achievementTexture.getRegionWidth(),
@@ -155,23 +150,23 @@ public class CreateAchievmentPopup {
     }
 
     private void drawAchievementText(SpriteBatch sb, float y, float labelX, String text, int cashReward) {
-        int rewardMargin = ((int) HUD.getTextWidth(GameState.getLabel("reward", cashReward))) / 3;
-        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(10);
+        String reward = GameState.getLabel("reward", cashReward);
+        float extraMargin = ScreenDimensionsManager.getScreenWidthValue(1);
         int standardFontSize = Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
         HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, standardFontSize, textAlphaValue);
         HUD.drawFont(sb,
-                GameState.getLabel("reward", cashReward),
-                labelX + extraMargin + rewardMargin,
+                reward,
+                labelX + extraMargin,
                 y + Utils.getValueForDisplayHeightPercent(1),
                 FontColor.BLACK,
                 standardFontSize,
                 textAlphaValue);
-        drawCoins(sb, y + 2, labelX + extraMargin + rewardMargin + ScreenDimensionsManager.getScreenWidthValue(13), cashReward);
+        drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + GameState.getLabel("reward", "0").length() * ScreenDimensionsManager.getScreenWidthValue(0.7f), cashReward);
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
-        CreateFinishPopup.drawImage(sb, x + (9 * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
+        CreateFinishPopup.drawImage(sb, x + (ScreenDimensionsManager.getScreenWidthValue(0.5f) * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
         sb.setColor(1.0f, 1.0f, 1.0f, 1f);
     }
 
@@ -185,7 +180,7 @@ public class CreateAchievmentPopup {
     }
 
     private float popupX(int displayAltitude) {
-        return (displayWidth - achievmentPopupTexture.getWidth()) / getPopupXPos(displayAltitude);
+        return (ScreenDimensionsManager.getScreenWidthValue(45) - achievmentPopupTexture.getWidth()) / getPopupXPos(displayAltitude);
     }
 
     private boolean playerIsCoveredByPopup(int displayAltitude) {

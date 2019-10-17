@@ -165,13 +165,13 @@ public class CreateFinishPopup {
                 drawAchievementsCash(sb,
                         popupY + getHeightPercent((int) (startPercent - diffPercent * 3.7f)),
                         getXIncrement(),
-                        getXIncrement() + incrementCounterBorder.getRegionWidth() + getWidthPercent(1));
+                        getXIncrement() + incrementCounterBorder.getRegionWidth() - getWidthPercent(2));
                 yOffsetForTotal = -10;
             }
             drawTotal(sb,
                     popupY + getHeightPercent(startPercent - diffPercent * 4) + yOffsetForTotal,
                     getXIncrement(),
-                    getXIncrement() + incrementCounterBorder.getRegionWidth() + getWidthPercent(1),
+                    getXIncrement() + incrementCounterBorder.getRegionWidth() - getWidthPercent(2),
                     playerAttrs.getTotalCash());
         }
     }
@@ -246,7 +246,7 @@ public class CreateFinishPopup {
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {
-        drawImage(sb, x + (ScreenDimensionsManager.getScreenWidthValue(3) * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
+        drawImage(sb, x + (HUD.getTextWidth(Integer.toString(cash))), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
     }
 
     private int getXIncrement() {

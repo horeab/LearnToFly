@@ -89,7 +89,7 @@ public class HUD {
         }
     }
 
-    private static float getFontScale() {
+    public static float getFontScale() {
         return 0.5f;
     }
 
@@ -170,7 +170,7 @@ public class HUD {
     }
 
     static void drawFont(SpriteBatch sb, String text, float x, float y, FontColor fontColor, int fontSize, float alphaValue) {
-        drawFont(sb, text, x, y, new FontConfig(fontColor.getColor(), fontColor.getColor(), fontSize, FontManager.STANDARD_BORDER_WIDTH), alphaValue);
+        drawFont(sb, text, x, y, new FontConfig(fontColor.getColor(), fontColor.getColor(), fontSize, FontConfig.STANDARD_BORDER_WIDTH), alphaValue);
     }
 
     static void drawFont(SpriteBatch sb, String text, float x, float y, FontConfig fontConfig, float alphaValue) {
@@ -181,7 +181,7 @@ public class HUD {
     }
 
     public static float getTextWidth(String text) {
-        return text.length() * ScreenDimensionsManager.getScreenWidthValue(3f);
+        return text.length() * ScreenDimensionsManager.getScreenWidthValue(1f);
     }
 
     private static int nrOfSpaces(String s, int currentPos) {

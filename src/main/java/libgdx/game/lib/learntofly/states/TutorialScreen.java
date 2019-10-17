@@ -15,6 +15,7 @@ import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.to.GameInfo;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
+import libgdx.utils.ScreenDimensionsManager;
 
 public class TutorialScreen extends GameState {
 
@@ -65,14 +66,14 @@ public class TutorialScreen extends GameState {
         instructionsLabel.setAlignment(Align.topLeft);
         imageTable
                 .add(instructionsLabel)
-                .height(Game.getHeight())
-                .width(Game.getWidth())
+                .height(ScreenDimensionsManager.getScreenHeight())
+                .width(ScreenDimensionsManager.getScreenWidth())
                 .padLeft(getPadLeft())
                 .padTop(getPadTop());
         allTable
                 .add(imageTable)
-                .height(Game.getHeight())
-                .width(Game.getWidth());
+                .height(ScreenDimensionsManager.getScreenHeight())
+                .width(ScreenDimensionsManager.getScreenWidth());
         return allTable;
     }
 
@@ -122,10 +123,10 @@ public class TutorialScreen extends GameState {
         float padLeft = 0;
         switch (tutorialScreenType) {
             case START_GAME:
-                padLeft = Utils.getValueForPercent(3, Game.getWidth());
+                padLeft = ScreenDimensionsManager.getScreenWidthValue(10);
                 break;
             case ROCKET:
-                padLeft = Utils.getValueForPercent(8, Game.getWidth());
+                padLeft =ScreenDimensionsManager.getScreenWidthValue(10);
                 break;
             default:
                 break;

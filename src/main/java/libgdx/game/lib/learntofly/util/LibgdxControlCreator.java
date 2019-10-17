@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import libgdx.game.Game;
+import libgdx.game.lib.learntofly.hud.HUD;
 import libgdx.resources.FontManager;
+import libgdx.utils.model.FontConfig;
 
 public class LibgdxControlCreator {
 
@@ -23,9 +25,13 @@ public class LibgdxControlCreator {
     }
 
     public TextButton textButton(String text, String styleName) {
+        return textButton(text, new FontConfig(FontConfig.FONT_SIZE * 2), styleName);
+    }
+
+    public TextButton textButton(String text, FontConfig fontConfig, String styleName) {
         TextButton btn = new TextButton(text, skin, styleName);
-        btn.getStyle().font = Game.getInstance().getFontManager().getFont();
-        btn.getStyle().font.getData().setScale(FontManager.getNormalFontDim());
+        btn.getStyle().font = Game.getInstance().getFontManager().getFont(fontConfig);
+        btn.getStyle().font.getData().setScale(HUD.getFontScale());
         return btn;
     }
 
@@ -52,7 +58,7 @@ public class LibgdxControlCreator {
     public Label label(String text) {
         Label label = new Label(text, skin);
         label.setFontScale(FontManager.getNormalFontDim());
-        label.getStyle().font = Game.getInstance().getFontManager().getFont();
+        label.getStyle().font = Game.getInstance().getFontManager().getFont(new FontConfig(FontConfig.FONT_SIZE * 2));
         return label;
     }
 }
