@@ -42,7 +42,6 @@ public class MainMenu extends GameState {
     private Table createLayout() {
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
         allTable.setFillParent(true);
-        Image background_second = c.image("background_second");
 
         Table controlsTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage(), false);
         Table soundTable = new Table(skin);
@@ -63,17 +62,14 @@ public class MainMenu extends GameState {
         Table buttonsTable = new Table(skin);
         Table continueTable = new Table(skin);
         Table newGameTable = new Table(skin);
-        Table likeBtnTable = new Table(skin);
 
         int titleTableTopPad = 0;
         int soundTableTopPad = 0;
-        float likeButtonTopPad = valueForScaledHeight(-20);
         float padBottomForBackground = valueForScaledHeight(80);
         if (!gameInfo.gameExistsInMemory()) {
             titleTableTopPad = 10;
             soundTableTopPad = 10;
             padBottomForBackground = valueForScaledHeight(70);
-            likeButtonTopPad = -(getBtnHeight() - valueForScaledHeight(-10));
         }
         buttonsTable.add(continueTable)
                 .height(valueForScaledHeight(30))
@@ -100,8 +96,10 @@ public class MainMenu extends GameState {
         if (gameInfo.gameExistsInMemory()) {
             newGameTable.add(createNewGameBtn()).width(getBtnWidth()).height(getBtnHeight());
         }
-        allTable.add(background_second).width(background_second.getWidth()).height(background_second.getHeight()).padBottom(padBottomForBackground).align(Align.bottom);
-        allTable.add(controlsTable).padLeft(-background_second.getWidth());
+        Image background_second = c.image("background_second");
+        float backgroundSecondDimen = MainDimen.horizontal_general_margin.getDimen() * 40;
+        allTable.add(background_second).width(backgroundSecondDimen).height(backgroundSecondDimen).padBottom(padBottomForBackground).align(Align.bottom);
+        allTable.add(controlsTable).padLeft(-backgroundSecondDimen);
         return allTable;
     }
 
@@ -162,6 +160,8 @@ public class MainMenu extends GameState {
                     protected void addButtons() {
                         TextButton notBtn = c.textButton(LearnToFlyGameLabel.l_no.getText(), "default");
                         TextButton yesBtn = c.textButton(LearnToFlyGameLabel.l_yes.getText(), "default");
+                        notBtn.setWidth(ScreenDimensionsManager.getScreenWidthValue(20));
+                        yesBtn.setWidth(ScreenDimensionsManager.getScreenWidthValue(20));
                         yesBtn.addListener(new ClickListener() {
                             @Override
                             public void clicked(InputEvent event, float x, float y) {

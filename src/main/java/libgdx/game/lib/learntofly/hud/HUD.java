@@ -181,7 +181,7 @@ public class HUD {
     }
 
     public static float getTextWidth(String text) {
-        return text.length() * ScreenDimensionsManager.getScreenWidthValue(1f);
+        return new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(), text).width;
     }
 
     private static int nrOfSpaces(String s, int currentPos) {

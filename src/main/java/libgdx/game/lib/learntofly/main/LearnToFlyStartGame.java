@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import libgdx.constants.Language;
 import libgdx.game.lib.learntofly.util.GameMode;
 
-public class LearnToFly {
+public class LearnToFlyStartGame {
 
     private static final Pair<Integer, Integer> q = new ImmutablePair<>(3436, 2125);
     private static final Pair<Integer, Integer> w = new ImmutablePair<>(1084, 610);

@@ -3,6 +3,7 @@ package libgdx.game.lib.learntofly.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -66,7 +67,7 @@ public class CreateAchievmentPopup {
             TextureRegion achievementImage = getAchievementTexture(currentAchievement.getAchievementId());
             String text = currentAchievement.getAchievementLabel(currentAchievement.getValue());
             int popupWidth = (int) HUD.getTextWidth(text) + ACIEVEMENT_TEXTURE_SIDE_SIZE;
-            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(Math.round(popupWidth / 1.1f), getPopupHeight(), 12, Color.valueOf("339933")));
+            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(Math.round(getMinPopupWidth(popupWidth) / 1.1f), getPopupHeight(), 12, Color.valueOf("339933")));
             float alphaValue = popupAlphaValue;
             if (playerIsCoveredByPopup(displayAltitude)) {
                 alphaValue = 0.3f;
@@ -95,7 +96,7 @@ public class CreateAchievmentPopup {
             text2 = LearnToFlyGameLabel.l_play_game_finished.getText();
         }
         int popupWidth = (int) HUD.getTextWidth(text1) + Math.round(ScreenDimensionsManager.getScreenWidthValue(5));
-        achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(popupWidth, getPopupHeight(), 12, Color.valueOf("FF9900")));
+        achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(getMinPopupWidth(popupWidth), getPopupHeight(), 12, Color.valueOf("FF9900")));
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
         int height = (int) Utils.getValueForDisplayHeightPercent(80);
         float popupX = Utils.getValueForPercent(ScreenDimensionsManager.getScreenWidth(), 3);
@@ -116,6 +117,11 @@ public class CreateAchievmentPopup {
                 FontColor.BLACK,
                 Game.STANDARD_FONT_SIZE,
                 textAlphaValue);
+    }
+
+    private int getMinPopupWidth(int width) {
+        float screenWidthValue = ScreenDimensionsManager.getScreenWidthValue(15);
+        return width < screenWidthValue ? Math.round(screenWidthValue) : width;
     }
 
     private int getPopupHeight() {
@@ -162,12 +168,15 @@ public class CreateAchievmentPopup {
                 FontColor.BLACK,
                 standardFontSize,
                 textAlphaValue);
-        drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + LearnToFlyGameLabel.l_reward.getText("0").length() * ScreenDimensionsManager.getScreenWidthValue(0.7f), cashReward);
+        drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(), LearnToFlyGameLabel.l_reward.getText("0")).width, cashReward);
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {
         sb.setColor(1.0f, 1.0f, 1.0f, popupAlphaValue);
-        CreateFinishPopup.drawImage(sb, x + (ScreenDimensionsManager.getScreenWidthValue(0.5f) * Integer.toString(cash).length()), y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
+//        float margin = ScreenDimensionsManager.getScreenWidthValue(0.1f) * Integer.toString(cash).length();
+//        float margin = 0;
+        float margin = new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(), Integer.toString(cash)).width;
+        CreateFinishPopup.drawImage(sb, x + margin, y, coinTexture, B2DSprites.SPRITE_SCALE * 1.3f);
         sb.setColor(1.0f, 1.0f, 1.0f, 1f);
     }
 
