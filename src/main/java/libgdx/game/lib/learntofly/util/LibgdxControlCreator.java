@@ -8,9 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
+import libgdx.controls.button.ButtonBuilder;
+import libgdx.controls.button.MyButton;
+import libgdx.controls.label.MyWrappedLabel;
+import libgdx.controls.label.MyWrappedLabelConfigBuilder;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.hud.HUD;
 import libgdx.resources.FontManager;
+import libgdx.utils.model.FontColor;
 import libgdx.utils.model.FontConfig;
 
 public class LibgdxControlCreator {
@@ -28,8 +33,8 @@ public class LibgdxControlCreator {
         return textButton(text, new FontConfig(FontConfig.FONT_SIZE * 2), styleName);
     }
 
-    public TextButton textButton(String text, FontConfig fontConfig, String styleName) {
-        TextButton btn = new TextButton(text, skin, styleName);
+    public MyButton textButton(String text, FontConfig fontConfig, String styleName) {
+        MyButton btn = new ButtonBuilder().setDefaultButton().setText(text).build();
         btn.getStyle().font = Game.getInstance().getFontManager().getFont(fontConfig);
         btn.getStyle().font.getData().setScale(HUD.getFontScale());
         return btn;
@@ -55,10 +60,11 @@ public class LibgdxControlCreator {
         return image;
     }
 
-    public Label label(String text) {
-        Label label = new Label(text, skin);
-        label.setFontScale(FontManager.getNormalFontDim());
-        label.getStyle().font = Game.getInstance().getFontManager().getFont(new FontConfig(FontConfig.FONT_SIZE * 2));
-        return label;
+    public MyWrappedLabel label(String text) {
+        return new MyWrappedLabel(new MyWrappedLabelConfigBuilder().setFontConfig(new FontConfig(
+                FontColor.BLACK.getColor(),
+                FontColor.BLACK.getColor(),
+                FontConfig.FONT_SIZE * 2,
+                0f)).setText(text).build());
     }
 }

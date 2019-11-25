@@ -6,13 +6,15 @@ import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import libgdx.controls.label.MyWrappedLabel;
+
 public class UpgradeMenuScrollShopInfo {
 
-	private List<Label> shopNameLabels = new ArrayList<Label>();
+	private List<MyWrappedLabel> shopNameLabels = new ArrayList<MyWrappedLabel>();
 
 	private List<ImageButton> shopImgButtons = new ArrayList<ImageButton>();
 
-	public List<Label> getShopNameLabels() {
+	public List<MyWrappedLabel> getShopNameLabels() {
 		return shopNameLabels;
 	}
 

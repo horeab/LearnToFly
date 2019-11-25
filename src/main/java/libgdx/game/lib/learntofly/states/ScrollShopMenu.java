@@ -1,5 +1,6 @@
 package libgdx.game.lib.learntofly.states;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.levels.GliderLevel;
@@ -140,16 +141,16 @@ public class ScrollShopMenu extends GameState {
                 SpriteDrawable drawable = Utils.getDrawable(Resource.checked);
                 btnTable.setBackground(drawable);
             } else {
-                Label label = c.label(LearnToFlyGameLabel.l_buy.getText());
+                MyWrappedLabel label = c.label(LearnToFlyGameLabel.l_buy.getText());
                 label.setFontScale(libgdxControlUtils.getFontScale());
                 btnTable.add(label);
                 if (shopLevel.getLevel() > getBoughtLevel() + 1) {
-                    label.getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.GRAY);
+                    label.getLabels().get(0).getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.GRAY);
                 } else {
                     if (!affordNextLevelForShop(gameInfo.getCash(), currentShopLevel, getBoughtLevel())) {
                         BitmapFont font = Game.getInstance().getFontManager().getFont(FontColor.RED);
-                        label.getStyle().font = font;
-                        scrollShopInfo.getPriceLabels().get(i - 1).getStyle().font = font;
+                        label.getLabels().get(0).getStyle().font = font;
+                        scrollShopInfo.getPriceLabels().get(i - 1).getLabels().get(0).getStyle().font = font;
                     } else {
                         btn.setTouchable(Touchable.enabled);
                     }
@@ -237,7 +238,7 @@ public class ScrollShopMenu extends GameState {
         Table levelContainer = new Table(skin);
         levelContainer.setBackground(backgroundDrawable);
         for (int i = 0; i < attrValues.length; i++) {
-            Label levelLabel = c.label(attrLabels[i]);
+            MyWrappedLabel levelLabel = c.label(attrLabels[i]);
             levelLabel.setFontScale(libgdxControlUtils.getFontScale() / 1.5f);
             Table labelTable = new Table(skin);
             labelTable.add(levelLabel);
@@ -265,7 +266,7 @@ public class ScrollShopMenu extends GameState {
     private Table createImageContainer(ShopLevel shopLevel) {
         Table imgContainer = new Table(skin);
         Table imgContainerLabelTable = new Table(skin);
-        Label imgLabel = c.label(shopLevel.getLevelName());
+        MyWrappedLabel imgLabel = c.label(shopLevel.getLevelName());
         imgLabel.setFontScale(libgdxControlUtils.getFontScale() / 1.5f);
         imgContainerLabelTable
                 .add(imgLabel)
@@ -283,7 +284,7 @@ public class ScrollShopMenu extends GameState {
                 .padTop(10);
         imgContainerImgTable.row();
 
-        Label priceLabel = c.label(Integer.toString(shopLevel.getPrice()));
+        MyWrappedLabel priceLabel = c.label(Integer.toString(shopLevel.getPrice()));
         priceLabel.setFontScale(libgdxControlUtils.getFontScale());
         Image coinImg = new Image(skin, "coin");
         coinImg.setScale(0.52f);

@@ -7,11 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import libgdx.controls.label.MyWrappedLabel;
+
 public class ScrollShopInfo {
 
 	private List<Button> buyBtns = new ArrayList<Button>();
 	private List<Table> buyBtnTextContainer = new ArrayList<Table>();
-	private List<Label> priceLabels = new ArrayList<Label>();
+	private List<MyWrappedLabel> priceLabels = new ArrayList<MyWrappedLabel>();
 
 	public List<Button> getBuyBtns() {
 		return buyBtns;
@@ -21,11 +23,11 @@ public class ScrollShopInfo {
 		this.buyBtns = buyBtns;
 	}
 
-	public List<Label> getPriceLabels() {
+	public List<MyWrappedLabel> getPriceLabels() {
 		return priceLabels;
 	}
 
-	public void setPriceLabels(List<Label> priceLabels) {
+	public void setPriceLabels(List<MyWrappedLabel> priceLabels) {
 		this.priceLabels = priceLabels;
 	}
 

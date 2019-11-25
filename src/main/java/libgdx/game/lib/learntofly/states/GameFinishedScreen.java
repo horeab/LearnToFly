@@ -1,5 +1,6 @@
 package libgdx.game.lib.learntofly.states;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
@@ -34,11 +35,11 @@ public class GameFinishedScreen extends GameState {
     private Table createLayout() {
         Table allTable = libgdxControlUtils.createAllScreenTable(gameInfo.getSelectedStage());
         allTable.setFillParent(true);
-        Label congratulationsLabel = c.label(LearnToFlyGameLabel.l_congratulations.getText());
+        MyWrappedLabel congratulationsLabel = c.label(LearnToFlyGameLabel.l_congratulations.getText());
         congratulationsLabel.setFontScale(libgdxControlUtils.getFontScale());
-        Label finishedLabel = c.label(LearnToFlyGameLabel.l_finished_game.getText(gameInfo.getCurrentDay()));
+        MyWrappedLabel finishedLabel = c.label(LearnToFlyGameLabel.l_finished_game.getText(gameInfo.getCurrentDay()));
         finishedLabel.setFontScale(libgdxControlUtils.getFontScale());
-        Label optionsLabel = c.label(LearnToFlyGameLabel.l_confirm_msg.getText());
+        MyWrappedLabel optionsLabel = c.label(LearnToFlyGameLabel.l_confirm_msg.getText());
         optionsLabel.setAlignment(Align.center);
         optionsLabel.setFontScale(libgdxControlUtils.getFontScale() / 1.3f);
         Table labelTable = new Table(skin);

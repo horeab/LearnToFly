@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import libgdx.controls.label.MyWrappedLabel;
+import libgdx.controls.label.MyWrappedLabelConfigBuilder;
 import libgdx.controls.popup.MyPopup;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
@@ -21,6 +23,7 @@ import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.resources.dimen.MainDimen;
 import libgdx.utils.ScreenDimensionsManager;
+import libgdx.utils.model.FontColor;
 import libgdx.utils.model.FontConfig;
 
 public class MainMenu extends GameState {
@@ -56,8 +59,12 @@ public class MainMenu extends GameState {
                 .padTop(valueForScaledHeight(45) * libgdxControlUtils.getWidthDisplayRatio());
 
         Table titleTable = new Table(skin);
-        SpriteDrawable titleDr = Utils.getDrawable(Resource.getTitleResource(game.getLanguage()));
-        titleTable.setBackground(titleDr);
+        MyWrappedLabel titleLabel = new MyWrappedLabel(new MyWrappedLabelConfigBuilder().setFontConfig(new FontConfig(
+                FontColor.WHITE.getColor(),
+                FontColor.BLACK.getColor(),
+                FontConfig.FONT_SIZE * 6,
+                8f)).setText(Game.getInstance().getAppInfoService().getAppName()).build());
+        titleTable.add(titleLabel);
 
         Table buttonsTable = new Table(skin);
         Table continueTable = new Table(skin);
@@ -84,8 +91,6 @@ public class MainMenu extends GameState {
                 .padTop(valueForScaledHeight(soundTableTopPad))
                 .width(ScreenDimensionsManager.getScreenWidth()).row();
         controlsTable.add(titleTable)
-                .height(titleDr.getSprite().getHeight())
-                .width(titleDr.getSprite().getWidth())
                 .padTop(valueForScaledHeight(titleTableTopPad))
                 .row();
         controlsTable.add(buttonsTable)
@@ -97,7 +102,7 @@ public class MainMenu extends GameState {
             newGameTable.add(createNewGameBtn()).width(getBtnWidth()).height(getBtnHeight());
         }
         Image background_second = c.image("background_second");
-        float backgroundSecondDimen = MainDimen.horizontal_general_margin.getDimen() * 40;
+        float backgroundSecondDimen = MainDimen.horizontal_general_margin.getDimen() * 25;
         allTable.add(background_second).width(backgroundSecondDimen).height(backgroundSecondDimen).padBottom(padBottomForBackground).align(Align.bottom);
         allTable.add(controlsTable).padLeft(-backgroundSecondDimen);
         return allTable;

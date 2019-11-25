@@ -1,15 +1,11 @@
 package libgdx.game.lib.learntofly.hud;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.achievements.Achievement;
 import libgdx.game.lib.learntofly.entities.player.Player;
 import libgdx.game.lib.learntofly.entities.player.PlayerAttrs;
@@ -18,10 +14,6 @@ import libgdx.game.lib.learntofly.states.Play;
 import libgdx.game.lib.learntofly.util.LibgdxControlUtils;
 import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
-import libgdx.resources.FontManager;
-import libgdx.resources.MainResource;
-import libgdx.resources.gamelabel.MainGameLabel;
-import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
 import libgdx.utils.model.FontConfig;
 
@@ -36,7 +28,7 @@ public class HUD {
 
     private Player player;
     private CreateFinishPopup createFinishPopup;
-    private CreateAchievmentPopup createAchievmentPopup;
+    private CreateAchievementPopup createAchievmentPopup;
 
     private TextureRegion fuelBarEmptyBackground;
     private TextureRegion speedometer;
@@ -50,7 +42,7 @@ public class HUD {
         this.displayWidth = Game.getWidth();
         this.displayHeight = Game.getHeight();
         createFinishPopup = new CreateFinishPopup(playerAttrs);
-        createAchievmentPopup = new CreateAchievmentPopup(libgdxControlUtils);
+        createAchievmentPopup = new CreateAchievementPopup(libgdxControlUtils);
         fuelBarFullTexture = Utils.getTextureWithFilter(Resource.fuel_bar_full);
         fuelBarEmptyBackground = new TextureRegion(Utils.getTextureWithFilter(Resource.fuel_bar_empty), 0, 0, 8, SPEEDOMETER_HEIGHT);
         speedometer = new TextureRegion(Utils.getTexture(Resource.speedometer), 0, 0, SPEEDOMETER_WIDTH * 2, SPEEDOMETER_HEIGHT * 2);
@@ -60,7 +52,7 @@ public class HUD {
     }
 
     public int getFuelbarXPos() {
-        return (int) (displayWidth - getWidthPercent(5));
+        return (int) (displayWidth - getWidthPercent(4));
     }
 
     public static int getFuelbarYPos(float displayHeight) {
@@ -83,7 +75,7 @@ public class HUD {
                 drawFuelBar(sb, availableFuel);
             }
             drawSpeedometer(sb, player.getXDisplaySpeed(), maxSpeedAllowed);
-            createAchievmentPopup.drawAchievmentPopup(sb, achievement, stageJustUnlocked, displayAltitude);
+            createAchievmentPopup.drawAchievementPopup(sb, achievement, stageJustUnlocked, displayAltitude);
         } else {
             createFinishPopup.drawFinishPopup(sb);
         }
@@ -142,18 +134,17 @@ public class HUD {
     private void drawSpeedNr(SpriteBatch sb, int speedAllowed) {
         float fontScale = Game.STANDARD_FONT_SIZE / 1.5f;
         // int halfSpeedAllowed = speedAllowed / 2;
+        FontConfig fontConfig = new FontConfig(FontColor.GREEN.getColor(), FontColor.BLACK.getColor(), Math.round(fontScale), 2f);
         drawFont(sb,
                 "0",
                 getFuelbarXPos() - SPEEDOMETER_WIDTH / 1.05f,
                 getFuelbarYPos(displayHeight) + SPEEDNEEDLE_HEIGHT / 5,
-                new FontConfig(FontColor.GREEN.getColor(),
-                        FontColor.BLACK.getColor(),
-                        Math.round(fontScale), 2f), 1f);
+                fontConfig, 1f);
         drawFont(sb,
                 speedAllowed + "",
-                getFuelbarXPos() - getTextWidth(speedAllowed + ""),
+                getFuelbarXPos() - getTextWidth(speedAllowed + "", fontConfig),
                 SPEEDOMETER_HEIGHT - SPEEDOMETER_WIDTH / 20,
-                new FontConfig(FontColor.GREEN.getColor(), FontColor.BLACK.getColor(), Math.round(fontScale), 2f),
+                fontConfig,
                 1f);
     }
 
@@ -180,8 +171,12 @@ public class HUD {
         bitmapFont.draw(sb, text, x, y);
     }
 
+    public static float getTextWidth(String text, FontConfig fontConfig) {
+        return new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(fontConfig), text).width;
+    }
+
     public static float getTextWidth(String text) {
-        return new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(), text).width;
+        return getTextWidth(text, new FontConfig());
     }
 
     private static int nrOfSpaces(String s, int currentPos) {

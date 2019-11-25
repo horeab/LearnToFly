@@ -5,11 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import libgdx.controls.button.MyButton;
+import libgdx.controls.label.MyWrappedLabel;
+
 public class IncrementShopInfo {
 
 	private Table container;
-	private TextButton buyBtn;
-	private Label priceLabel;
+	private MyButton buyBtn;
+	private MyWrappedLabel priceLabel;
 	private Image coinImage;
 
 	public Table getContainer() {
@@ -20,19 +23,19 @@ public class IncrementShopInfo {
 		this.container = container;
 	}
 
-	public TextButton getBuyBtn() {
+	public MyButton getBuyBtn() {
 		return buyBtn;
 	}
 
-	public void setBuyBtn(TextButton buyBtn) {
+	public void setBuyBtn(MyButton buyBtn) {
 		this.buyBtn = buyBtn;
 	}
 
-	public Label getPriceLabel() {
+	public MyWrappedLabel getPriceLabel() {
 		return priceLabel;
 	}
 
-	public void setPriceLabel(Label priceLabel) {
+	public void setPriceLabel(MyWrappedLabel priceLabel) {
 		this.priceLabel = priceLabel;
 	}
 

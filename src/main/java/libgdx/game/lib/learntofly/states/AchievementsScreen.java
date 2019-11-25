@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.achievements.Achievement;
 import libgdx.game.lib.learntofly.achievements.AltitudeAchievement;
 import libgdx.game.lib.learntofly.achievements.DistanceAchievement;
@@ -106,10 +107,10 @@ public class AchievementsScreen extends GameState {
 
     private Table createAchievement(Achievement achievement) {
         Table infoContainer = new Table(skin);
-        Label achievementLabel = c.label(achievement.getAchievementLabel(achievement.getValue()));
+        MyWrappedLabel achievementLabel = c.label(achievement.getAchievementLabel(achievement.getValue()));
         achievementLabel.setAlignment(Align.center);
         achievementLabel.setFontScale(libgdxControlUtils.getFontScale());
-        Label rewardLabel = c.label(LearnToFlyGameLabel.l_reward.getText(achievement.getReward()));
+        MyWrappedLabel rewardLabel = c.label(LearnToFlyGameLabel.l_reward.getText(achievement.getReward()));
         Table achievementLabelTable = new Table(skin);
         achievementLabelTable.add(achievementLabel).width(getAchievementInfoWidth()).padTop(getAchievementsPadding() / 2);
         Table rewardTable = new Table(skin);

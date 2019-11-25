@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.to.GameInfo;
@@ -62,7 +63,7 @@ public class TutorialScreen extends GameState {
                 processNextScreen();
             }
         });
-        Label instructionsLabel = c.label(getInstructions());
+        MyWrappedLabel instructionsLabel = c.label(getInstructions());
         instructionsLabel.setFontScale(libgdxControlUtils.getFontScale());
         instructionsLabel.setAlignment(Align.topLeft);
         imageTable

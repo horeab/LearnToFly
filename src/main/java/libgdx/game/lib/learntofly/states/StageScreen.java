@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.achievements.Achievement;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.to.GameInfo;
@@ -147,7 +148,7 @@ public class StageScreen extends GameState {
             stageImgTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE,
                     0.8f));
         } else {
-            Label label = c.label(LibgdxControlUtils.getStageName(stageNr));
+            MyWrappedLabel label = c.label(LibgdxControlUtils.getStageName(stageNr));
             label.setFontScale(libgdxControlUtils.getFontScale());
             Table labelBackgroundTable = new Table(skin);
             labelBackgroundTable.setBackground(LibgdxControlUtils.createColorTexture(Color.WHITE, 0.6f));
@@ -180,10 +181,10 @@ public class StageScreen extends GameState {
 
     private void addToAchTable(int nrValue, Drawable achImg, Table achTable) {
         Image achievImg = new Image(achImg);
-        Label label = c.label("  " + nrValue);
+        MyWrappedLabel label = c.label("  " + nrValue);
         float fontScale = libgdxControlUtils.getFontScale() / 1.4f;
         label.setFontScale(fontScale);
-        Label xlabel = c.label("x");
+        MyWrappedLabel xlabel = c.label("x");
         xlabel.setFontScale(fontScale);
         achTable.add(label);
         achTable.add(xlabel);

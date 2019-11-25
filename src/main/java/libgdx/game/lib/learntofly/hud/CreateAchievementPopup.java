@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import libgdx.game.lib.learntofly.achievements.Achievement;
 import libgdx.game.lib.learntofly.main.Game;
-import libgdx.game.lib.learntofly.states.GameState;
 import libgdx.game.lib.learntofly.states.StageScreen;
 import libgdx.game.lib.learntofly.util.B2DSprites;
 import libgdx.game.lib.learntofly.util.LearnToFlyGameLabel;
@@ -18,10 +17,11 @@ import libgdx.game.lib.learntofly.util.Resource;
 import libgdx.game.lib.learntofly.util.Utils;
 import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
+import libgdx.utils.model.FontConfig;
 
-public class CreateAchievmentPopup {
+public class CreateAchievementPopup {
 
-    private static final int ACIEVEMENT_TEXTURE_SIDE_SIZE = 32;
+    private static final int ACHIEVEMENT_TEXTURE_SIDE_SIZE = 32;
     private static final int POPUP_TIMEOUT_SECONDS = 2;
 
     private Texture achievmentPopupTexture;
@@ -38,7 +38,7 @@ public class CreateAchievmentPopup {
     private Integer stageJustUnlocked;
     private LibgdxControlUtils libgdxControlUtils;
 
-    public CreateAchievmentPopup(LibgdxControlUtils libgdxControlUtils) {
+    public CreateAchievementPopup(LibgdxControlUtils libgdxControlUtils) {
         this.libgdxControlUtils = libgdxControlUtils;
         coinTexture = new TextureRegion(Utils.getTextureWithFilter(Resource.coin));
         speedAchTexture = new TextureRegion(Utils.getTextureWithFilter(Resource.speed_achievement));
@@ -47,7 +47,7 @@ public class CreateAchievmentPopup {
         altitudeAchTexture = new TextureRegion(Utils.getTextureWithFilter(Resource.altitude_achievement));
     }
 
-    public void drawAchievmentPopup(SpriteBatch sb, Achievement achievement, Integer stageJustUnlocked, int displayAltitude) {
+    public void drawAchievementPopup(SpriteBatch sb, Achievement achievement, Integer stageJustUnlocked, int displayAltitude) {
         if (currentAchievement == null) {
             currentAchievement = achievement;
             this.stageJustUnlocked = stageJustUnlocked;
@@ -66,8 +66,8 @@ public class CreateAchievmentPopup {
         if (popupAlphaValue >= 0f && currentAchievement != null) {
             TextureRegion achievementImage = getAchievementTexture(currentAchievement.getAchievementId());
             String text = currentAchievement.getAchievementLabel(currentAchievement.getValue());
-            int popupWidth = (int) HUD.getTextWidth(text) + ACIEVEMENT_TEXTURE_SIDE_SIZE;
-            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(Math.round(getMinPopupWidth(popupWidth) / 1.1f), getPopupHeight(), 12, Color.valueOf("339933")));
+            int popupWidth = (int) HUD.getTextWidth(text, new FontConfig(getAchievementFontSize())) + ACHIEVEMENT_TEXTURE_SIDE_SIZE;
+            achievmentPopupTexture = new Texture(CreateFinishPopup.getPixmapRoundedRectangle(Math.round(getMinPopupWidth(popupWidth)), getPopupHeight(), 12, Color.valueOf("339933")));
             float alphaValue = popupAlphaValue;
             if (playerIsCoveredByPopup(displayAltitude)) {
                 alphaValue = 0.3f;
@@ -76,7 +76,7 @@ public class CreateAchievmentPopup {
             sb.draw(achievmentPopupTexture, popupX(displayAltitude), HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()));
             drawAchievementImage(sb, displayAltitude, achievementImage);
             sb.setColor(1.0f, 1.0f, 1.0f, 1f);
-            drawAchievementText(sb, HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()), popupX(displayAltitude) + ACIEVEMENT_TEXTURE_SIDE_SIZE, text, currentAchievement.getReward());
+            drawAchievementText(sb, HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()), popupX(displayAltitude) + ACHIEVEMENT_TEXTURE_SIDE_SIZE, text, currentAchievement.getReward());
             if (this.stageJustUnlocked != null) {
                 drawUnlockedStagePopup(sb);
             }
@@ -120,7 +120,7 @@ public class CreateAchievmentPopup {
     }
 
     private int getMinPopupWidth(int width) {
-        float screenWidthValue = ScreenDimensionsManager.getScreenWidthValue(15);
+        float screenWidthValue = ScreenDimensionsManager.getScreenWidthValue(20);
         return width < screenWidthValue ? Math.round(screenWidthValue) : width;
     }
 
@@ -131,7 +131,7 @@ public class CreateAchievmentPopup {
     private void drawAchievementImage(SpriteBatch sb, int displayAltitude, TextureRegion achievementTexture) {
         float baseScale = 1f * libgdxControlUtils.getHeightDisplayRatio();
         sb.draw(achievementTexture,
-                popupX(displayAltitude) + ACIEVEMENT_TEXTURE_SIDE_SIZE / 10,
+                popupX(displayAltitude) + ACHIEVEMENT_TEXTURE_SIDE_SIZE / 10,
                 HUD.getFuelbarYPos(ScreenDimensionsManager.getScreenHeight()) + getPopupHeight() / 10,
                 0,// orgin
                 0,// orgin
@@ -159,7 +159,7 @@ public class CreateAchievmentPopup {
     private void drawAchievementText(SpriteBatch sb, float y, float labelX, String text, int cashReward) {
         String reward = LearnToFlyGameLabel.l_reward.getText(cashReward);
         float extraMargin = ScreenDimensionsManager.getScreenWidthValue(1);
-        int standardFontSize = Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
+        int standardFontSize = getAchievementFontSize();
         HUD.drawFont(sb, text, labelX + extraMargin, y + Utils.getValueForDisplayHeightPercent(8), FontColor.BLACK, standardFontSize, textAlphaValue);
         HUD.drawFont(sb,
                 reward,
@@ -169,6 +169,10 @@ public class CreateAchievmentPopup {
                 standardFontSize,
                 textAlphaValue);
         drawCoins(sb, y + Utils.getValueForDisplayHeightPercent(0), labelX + extraMargin + new GlyphLayout(libgdx.game.Game.getInstance().getFontManager().getFont(), LearnToFlyGameLabel.l_reward.getText("0")).width, cashReward);
+    }
+
+    private int getAchievementFontSize() {
+        return Math.round(Game.STANDARD_FONT_SIZE / 1.5f);
     }
 
     private void drawCoins(SpriteBatch sb, float y, float x, int cash) {

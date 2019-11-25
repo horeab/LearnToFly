@@ -3,14 +3,16 @@ package libgdx.game.lib.learntofly.to.menu;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import libgdx.controls.label.MyWrappedLabel;
+
 public class HeaderInfo {
 
 	private Table headerTable;
-	private Label currentDay;
-	private Label stage;
-	private Label cash;
+	private MyWrappedLabel currentDay;
+	private MyWrappedLabel stage;
+	private MyWrappedLabel cash;
 
-	public HeaderInfo(Table headerTable, Label currentDay, Label stage, Label cash) {
+	public HeaderInfo(Table headerTable, MyWrappedLabel currentDay, MyWrappedLabel stage, MyWrappedLabel cash) {
 		super();
 		this.headerTable = headerTable;
 		this.currentDay = currentDay;
@@ -26,27 +28,27 @@ public class HeaderInfo {
 		this.headerTable = headerTable;
 	}
 
-	public Label getCurrentDay() {
+	public MyWrappedLabel getCurrentDay() {
 		return currentDay;
 	}
 
-	public void setCurrentDay(Label currentDay) {
+	public void setCurrentDay(MyWrappedLabel currentDay) {
 		this.currentDay = currentDay;
 	}
 
-	public Label getCash() {
+	public MyWrappedLabel getCash() {
 		return cash;
 	}
 
-	public void setCash(Label cash) {
+	public void setCash(MyWrappedLabel cash) {
 		this.cash = cash;
 	}
 
-	public Label getStage() {
+	public MyWrappedLabel getStage() {
 		return stage;
 	}
 
-	public void setStage(Label stage) {
+	public void setStage(MyWrappedLabel stage) {
 		this.stage = stage;
 	}
 

@@ -1,5 +1,8 @@
 package libgdx.game.lib.learntofly.states;
 
+import libgdx.controls.button.ButtonBuilder;
+import libgdx.controls.button.MyButton;
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.Game;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.levels.FuelLevel;
@@ -20,6 +23,7 @@ import libgdx.resources.FontManager;
 import libgdx.resources.dimen.MainDimen;
 import libgdx.utils.ScreenDimensionsManager;
 import libgdx.utils.model.FontColor;
+import libgdx.utils.model.FontConfig;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -101,7 +105,6 @@ public class UpgradeMenu extends GameState {
     private void addButtons() {
         TextButton playButton = new TextButton(LearnToFlyGameLabel.l_play.getText(), skin, "green");
         playButton.getStyle().font = Game.getInstance().getFontManager().getFont();
-        playButton.getLabel().setFontScale(libgdxControlUtils.getFontScale());
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -175,8 +178,7 @@ public class UpgradeMenu extends GameState {
         Table imgContainer = new Table(skin);
         Table imgContainerLabelTable = new Table(skin);
         String labelText = finalShopLevel.getLevelName();
-        Label imgLabel = c.label(labelText);
-        imgLabel.setFontScale(libgdxControlUtils.getFontScale() / 1.5f);
+        MyWrappedLabel imgLabel = c.label(labelText);
         imgContainerLabelTable.add(imgLabel);
         Table imgContainerImgTable = new Table(skin);
         setShopImg(finalShopLevel, imgContainerImgTable);
@@ -239,9 +241,7 @@ public class UpgradeMenu extends GameState {
 
     private Table createIncrementShop(int shopType) {
         Table allContainer = new Table(skin);
-        TextButton buyButton = new TextButton(LearnToFlyGameLabel.l_buy.getText(), skin);
-        buyButton.getStyle().font = Game.getInstance().getFontManager().getFont();
-        buyButton.getLabel().setFontScale(FontManager.getSmallFontDim());
+        MyButton buyButton = new ButtonBuilder().setText(LearnToFlyGameLabel.l_buy.getText()).build();
         buyButtonClick(buyButton, shopType);
         float levelContainerWidth = getIncrementShopWidth() - buyBtnWidth;
         Table levelContainerTable = new Table(skin);
@@ -313,7 +313,7 @@ public class UpgradeMenu extends GameState {
         return boughtLevels;
     }
 
-    private void buyButtonClick(TextButton buyButton, final int shopId) {
+    private void buyButtonClick(MyButton buyButton, final int shopId) {
         buyButton.addListener(new ClickListener() {
             @SuppressWarnings("synthetic-access")
             @Override
@@ -361,7 +361,7 @@ public class UpgradeMenu extends GameState {
         }
     }
 
-    private void disableButton(TextButton btn) {
+    private void disableButton(MyButton btn) {
         btn.getStyle().fontColor = Color.GRAY;
         btn.setTouchable(Touchable.disabled);
     }
@@ -374,11 +374,9 @@ public class UpgradeMenu extends GameState {
     private Table createIncrementShopLabel(int shopId) {
         Table labelTable = new Table(skin);
         labelTable.setBackground(LibgdxControlUtils.createColorTexture(Color.valueOf("ffffff"), 0.3f));
-        Label shopNameLabel = c.label(getShopLabel(shopId));
-        shopNameLabel.setFontScale(libgdxControlUtils.getFontScale());
-        Label nextLevelPriceLabel = c.label("");
+        MyWrappedLabel shopNameLabel = c.label(getShopLabel(shopId));
+        MyWrappedLabel nextLevelPriceLabel = c.label("");
         nextLevelPriceLabel.setAlignment(Align.right);
-        nextLevelPriceLabel.setFontScale(libgdxControlUtils.getFontScale());
         float incrementShopWidth = getIncrementShopWidth() - buyBtnWidth;
         float labelWidth = Utils.getValueForPercent(incrementShopWidth, 45);
         labelTable.add(shopNameLabel)
@@ -414,11 +412,11 @@ public class UpgradeMenu extends GameState {
         return labelTable;
     }
 
-    private void refreshNextLevelPriceLabel(Label nextLevel, Image coin, int shopId) {
+    private void refreshNextLevelPriceLabel(MyWrappedLabel nextLevel, Image coin, int shopId) {
         int nextLevelPrice = getNextLevelPrice(shopId);
         nextLevel.setText(LearnToFlyGameLabel.l_next_level.getText() + nextLevelPrice);
         if (gameInfo.getCash() < nextLevelPrice) {
-            nextLevel.getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.RED);
+            nextLevel.getLabels().get(0).getStyle().font = Game.getInstance().getFontManager().getFont(FontColor.RED);
         }
         if (shopIsMaxedOut(shopId)) {
             nextLevel.setText("");

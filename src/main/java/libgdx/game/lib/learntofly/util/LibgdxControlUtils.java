@@ -1,5 +1,6 @@
 package libgdx.game.lib.learntofly.util;
 
+import libgdx.controls.label.MyWrappedLabel;
 import libgdx.game.lib.learntofly.handlers.GameStateManager;
 import libgdx.game.lib.learntofly.main.Game;
 import libgdx.game.lib.learntofly.states.GameState;
@@ -63,11 +64,11 @@ public class LibgdxControlUtils {
     public HeaderInfo createHeaderTable(int stage, int day, int cash, GameStateManager gameStateManager, GameInfo gameInfo) {
         Table headerTable = new Table(skin);
         headerTable.setBackground(LibgdxControlUtils.createColorTexture(Color.valueOf("ffffff"), 0.6f));
-        Label stageLabel = c.label(getStageName(stage));
+        MyWrappedLabel stageLabel = c.label(getStageName(stage));
         stageLabel.setFontScale(getFontScale());
-        Label currentDayLabel = c.label(LearnToFlyGameLabel.l_day.getText(day));
+        MyWrappedLabel currentDayLabel = c.label(LearnToFlyGameLabel.l_day.getText(day));
         currentDayLabel.setFontScale(getFontScale());
-        Label cashLabel = c.label(cash + "");
+        MyWrappedLabel cashLabel = c.label(cash + "");
         cashLabel.setFontScale(getFontScale());
         headerTable.add(currentDayLabel);
         headerTable.add().width(displayWidth / 4);
@@ -103,7 +104,7 @@ public class LibgdxControlUtils {
         return allTable;
     }
 
-    private void stageLabelClick(Label stageLabel, final GameStateManager gameStateManager, final GameInfo gameInfo) {
+    private void stageLabelClick(MyWrappedLabel stageLabel, final GameStateManager gameStateManager, final GameInfo gameInfo) {
         stageLabel.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
